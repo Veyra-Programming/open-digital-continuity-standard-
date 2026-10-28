@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODCS — Open Digital Continuity Standard | Global Resilience Beyond the Network</title>
+  
+  <!-- SEO & Social Meta Tags -->
+  <meta name="description" content="Open Digital Continuity Standard (ODCS) defines a 4-layer architectural specification for distributed, offline-first digital resilience across network disruptions and outages.">
+  <meta name="keywords" content="ODCS, Open Digital Continuity Standard, offline-first, local-first, distributed systems, CRDT, software resilience, open standard">
+  <meta property="og:title" content="ODCS — Open Digital Continuity Standard">
+  <meta property="og:description" content="Digital experiences should work even when the network doesn't. An open technology standard for deterministic software continuity.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://odcs.in">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ODCS — Open Digital Continuity Standard">
+  <meta name="twitter:description" content="Digital experiences should work even when the network doesn't.">
+  <meta name="theme-color" content="#00F0FF">
+
+  <!-- Favicon & PWA Manifest -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Ambient Glowing Aurora Orbs -->
+  <div class="aurora-orb aurora-orb-1"></div>
+  <div class="aurora-orb aurora-orb-2"></div>
+
+  <!-- Top Autonomous Offline Alert Banner (Toggled by Master Switch) -->
+  <div id="autonomous-offline-banner" class="autonomous-offline-banner">
+    ⚡ <strong>ODCS Autonomous Offline Simulation Active:</strong> Running 100% locally with zero internet dependency. Mutations are committed to local WAL storage and queued for deterministic CRDT convergence.
+  </div>
+
+  <!-- ========================================================================
+       Top Institutional Navigation Bar
+       ======================================================================== -->
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="brand-wrapper">
+        <a href="index.html" aria-label="ODCS Home">
+          <img src="assets/odcs-logo.svg" alt="ODCS Logo" class="brand-logo" />
+        </a>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links" id="site-nav-links">
+          <li><a href="#four-layer-model" class="nav-link">4-Layer Model</a></li>
+          <li><a href="#simulator" class="nav-link">Live Simulator</a></li>
+          <li><a href="#specifications" class="nav-link">Specifications</a></li>
+          <li><a href="docs.html" class="nav-link">Documentation</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <!-- Live Ambient Continuity Indicator with Rotating Mini 3D Earth -->
+        <div id="navbar-continuity-pill" class="continuity-pill synced" role="button" tabindex="0" title="Click for ODCS Node Telemetry & Offline Toggle" aria-haspopup="true" aria-expanded="false">
+          <div class="header-earth-container" title="3D Rotating Earth Telemetry Node">
+            <canvas id="header-earth-canvas" width="22" height="22"></canvas>
+          </div>
+          <span class="status-indicator"></span>
+          <div class="pill-text-group">
+            <span class="pill-node-title">ODCS LIVE</span>
+            <span id="navbar-pill-label" class="pill-node-status">(ONLINE)</span>
+          </div>
+          <svg class="pill-caret-icon" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+
+          <!-- Interactive Cyber Telemetry Diagnostic Dropdown -->
+          <div id="header-node-popover" class="header-node-popover" role="dialog" aria-label="ODCS Node Diagnostics">
+            <div class="popover-top-bar">
+              <div class="popover-head-title">
+                <span class="popover-led"></span>
+                <span>ODCS NODE CONTINUITY</span>
+              </div>
+              <span class="popover-spec-pill">v1.0.0</span>
+            </div>
+            <div class="popover-stats-grid">
+              <div class="popover-stat-cell">
+                <span class="popover-stat-lbl">Network Profile</span>
+                <span id="popover-net-profile" class="popover-stat-val state-optimal">Optimal (Fiber 42ms)</span>
+              </div>
+              <div class="popover-stat-cell">
+                <span class="popover-stat-lbl">L1 Durability</span>
+                <span class="popover-stat-val">IndexedDB WAL [0 Loss]</span>
+              </div>
+              <div class="popover-stat-cell">
+                <span class="popover-stat-lbl">L2 Sync Engine</span>
+                <span class="popover-stat-val">CRDT Convergence</span>
+              </div>
+              <div class="popover-stat-cell">
+                <span class="popover-stat-lbl">Mesh Topology</span>
+                <span class="popover-stat-val">13 Cities • 3 Satellites</span>
+              </div>
+            </div>
+            <div class="popover-action-box">
+              <button type="button" id="popover-toggle-offline-btn" class="popover-action-btn">
+                ⚡ Toggle Offline Resilience Test
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prominently Visible GitHub Project Repository Link -->
+        <a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-" target="_blank" rel="noopener noreferrer" class="btn-github" aria-label="GitHub Repository: Veyra-Programming/open-digital-continuity-standard-" title="Official Project Repository on GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+          <span class="github-repo-text">GitHub</span>
+          <span class="github-repo-badge">Repo</span>
+        </a>
+
+        <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle navigation menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========================================================================
+         Hero Section with Interactive Mesh Constellation Canvas
+         ======================================================================== -->
+    <section class="hero-section" id="vision">
+      <!-- Interactive Mesh Particle Canvas -->
+      <canvas id="hero-particle-canvas"></canvas>
+
+      <div class="container hero-content">
+        <div class="hero-split-grid">
+          <!-- Left Column: Core Vision, Dynamic Kinetic Typewriter & Master Offline Switch -->
+          <div class="hero-left-content">
+            <div class="hero-tagline-badge">
+              <span style="color: var(--cyan-primary);">✦</span>
+              <span>GLOBAL OPEN TECHNOLOGY INITIATIVE • SPEC v1.0.0-DRAFT</span>
+            </div>
+
+            <!-- Master Offline Continuity Mode Simulation Switch -->
+            <div id="master-offline-switch" class="master-offline-switch-box" title="Click to test autonomous offline resilience and partition tolerance">
+              <div class="offline-toggle-pill">
+                <div class="offline-toggle-knob"></div>
+              </div>
+              <span class="offline-switch-label">⚡ Test Offline Continuity Mode</span>
+            </div>
+
+            <h1 class="hero-title">
+              Digital experiences should work <br class="hidden-mobile" />
+              <span class="dynamic-gradient-text">even when the network doesn't.</span>
+            </h1>
+
+            <div class="hero-mantra-box" style="margin-bottom: 20px; font-family: var(--font-mono); font-size: 0.96rem; color: var(--cyan-primary); min-height: 28px; display: flex; align-items: center; gap: 8px;">
+              <span style="color: var(--emerald-resilience); font-weight: 700;">&gt;</span>
+              <span id="hero-cycler-text" class="color-morph-text">Digital experiences that endure without the network.</span>
+              <span class="cursor-blink" style="color: var(--cyan-primary);">_</span>
+            </div>
+
+            <p class="hero-description">
+              ODCS is an open, vendor-neutral architectural standard establishing deterministic operational continuity for distributed systems, mobile software, and web applications across outages, latency spikes, and complete offline blackouts.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#four-layer-model" class="btn-primary">
+                <span>Explore 4-Layer Architecture</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+              <a href="#simulator" class="btn-secondary">
+                <span>Launch Live Simulator</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              </a>
+              <a href="docs.html" class="btn-secondary">
+                <span>Read Specifications</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: 3D Rotating Earth & Country Telemetry Mission Control -->
+          <div class="globe-showcase-card">
+            <div class="globe-header-bar">
+              <div class="globe-header-title">
+                <span class="globe-live-dot"></span>
+                <span>3D ROTATING EARTH • RESILIENCE MESH</span>
+              </div>
+              <div class="globe-header-actions">
+                <span class="globe-hud-badge">20 COUNTRIES MAPPED</span>
+                <button type="button" id="btn-toggle-sidebar" class="btn-sidebar-toggle" title="Toggle Country Telemetry Sidebar">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+                  <span id="sidebar-toggle-text">Sidebar</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Command Station: 3D Earth Canvas + Country Telemetry Sidebar -->
+            <div class="globe-command-station" id="globe-command-station">
+              <!-- Left: 3D Earth Interactive Viewport -->
+              <div class="globe-canvas-wrapper" id="globe-canvas-wrapper" title="Drag to rotate Earth in 3D • Click any country or node to inspect">
+                <canvas id="global-signals-canvas"></canvas>
+
+                <!-- Selected Country Floating Beacon Marker -->
+                <div id="globe-country-beacon" class="globe-country-beacon">
+                  <span class="beacon-flag" id="beacon-flag">🇮🇳</span>
+                  <span class="beacon-name" id="beacon-name">India</span>
+                </div>
+
+                <!-- Interactive 3D Node Hover Tooltip -->
+                <div id="globe-node-tooltip" class="globe-node-tooltip">
+                  <div id="tooltip-node-name" class="tooltip-name">Node</div>
+                  <div id="tooltip-node-tier" class="tooltip-tier">Class E • Active</div>
+                  <div id="tooltip-node-stat" class="tooltip-stat">Local WAL: 0ms • Disruption Tolerant</div>
+                </div>
+
+                <!-- Quick Interactive Globe Action Controls -->
+                <div class="globe-overlay-controls">
+                  <button type="button" id="btn-globe-pulse" class="globe-control-pill" title="Trigger global CRDT sync wave across all nodes">
+                    <span>⚡ Sync Pulse</span>
+                  </button>
+                  <button type="button" id="btn-globe-satellites" class="globe-control-pill active" title="Toggle LEO satellite constellation">
+                    <span>🛰️ Satellites</span>
+                  </button>
+                  <button type="button" id="btn-globe-borders" class="globe-control-pill active" title="Toggle Real Country Boundaries">
+                    <span>🗺️ Country Maps</span>
+                  </button>
+                  <button type="button" id="btn-globe-reset" class="globe-control-pill" title="Reset 3D Earth orientation">
+                    <span>↺ Reset</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right: Interactive Country Telemetry Sidebar -->
+              <aside class="globe-country-sidebar" id="globe-country-sidebar">
+                <div class="sidebar-top-group">
+                  <div class="sidebar-search-box">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="sidebar-country-search" class="sidebar-search-input" placeholder="Search country, node or region..." aria-label="Search countries">
+                  </div>
+                  <div class="sidebar-filter-pills">
+                    <button type="button" class="filter-pill active" data-filter="all">All (20)</button>
+                    <button type="button" class="filter-pill" data-filter="Class E">Class E (13)</button>
+                    <button type="button" class="filter-pill" data-filter="Class S">Class S (7)</button>
+                  </div>
+                </div>
+
+                <!-- Selected Country Resilience Dossier -->
+                <div class="active-country-dossier" id="active-country-dossier">
+                  <!-- Dynamically populated by js/globe.js -->
+                </div>
+
+                <!-- Scrollable Country Directory -->
+                <div class="sidebar-country-directory" id="sidebar-country-directory">
+                  <div class="directory-list-label">GLOBAL RESILIENT NODES DIRECTORY</div>
+                  <div class="directory-items-list" id="directory-items-list">
+                    <!-- Dynamically populated by js/globe.js -->
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <div class="globe-footer-hud">
+              <div>
+                <span class="hud-stat-val">20 Sovereign Countries</span>
+                Real Maps & Borders Active
+              </div>
+              <div>
+                <span class="hud-stat-val" style="color: var(--emerald-resilience);">3 LEO Satellites</span>
+                Laser Relay Mesh
+              </div>
+              <div>
+                <span class="hud-stat-val" style="color: var(--cyan-primary);">0ms Local WAL</span>
+                Zero Intent Loss
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Stats Ribbon -->
+        <div class="hero-stats-ribbon">
+          <div class="hero-stat-item">
+            <div class="hero-stat-val">4 Layers</div>
+            <div class="hero-stat-label">Full Systems Stack</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="hero-stat-val">0% Loss</div>
+            <div class="hero-stat-label">Intent Preservation</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="hero-stat-val">100% Offline</div>
+            <div class="hero-stat-label">Local Durability (WAL)</div>
+          </div>
+          <div class="hero-stat-item">
+            <div class="hero-stat-val">Apache 2.0</div>
+            <div class="hero-stat-label">Open Governance</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ODCS Decoded: The Architectural Full-Form
+         ======================================================================== -->
+    <section class="section-padding" id="full-form" style="background: linear-gradient(180deg, rgba(5, 8, 17, 0) 0%, rgba(13, 20, 36, 0.45) 50%, rgba(5, 8, 17, 0) 100%);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Architectural Nomenclature</span>
+          <h2 class="section-title">ODCS Decoded: The Core Principles</h2>
+          <p class="section-subtitle">
+            Every letter in the Open Digital Continuity Standard defines an inviolable systems invariant required for unbreakable, offline-first digital experiences.
+          </p>
+        </div>
+
+        <div class="odcs-fullform-grid">
+          <!-- O: Open Standard -->
+          <div class="fullform-card">
+            <div class="fullform-letter-badge letter-color-cycle" style="animation-delay: 0s;">O</div>
+            <div class="fullform-word">Open Standard</div>
+            <p class="fullform-desc">
+              Vendor-neutral, royalty-free architectural specifications governed under Apache 2.0. Eliminates proprietary vendor lock-in by standardizing deterministic protocol interfaces across clouds, browsers, and edge runtimes.
+            </p>
+            <span class="fullform-tag">RFC-2119 • Apache 2.0 • Interoperable</span>
+          </div>
+
+          <!-- D: Digital Durability -->
+          <div class="fullform-card">
+            <div class="fullform-letter-badge letter-color-cycle" style="animation-delay: 1.75s;">D</div>
+            <div class="fullform-word">Digital Durability</div>
+            <p class="fullform-desc">
+              Offline-first sovereign data authority. Through monotonic UUIDv7 keys and atomic Write-Ahead Logging (WAL) in local IndexedDB or SQLite, all user actions are acknowledged and saved locally before any network trip.
+            </p>
+            <span class="fullform-tag">Local Authority • Monotonic WAL • 0% Loss</span>
+          </div>
+
+          <!-- C: Continuity Engine -->
+          <div class="fullform-card">
+            <div class="fullform-letter-badge letter-color-cycle" style="animation-delay: 3.5s;">C</div>
+            <div class="fullform-word">Continuity Engine</div>
+            <p class="fullform-desc">
+              Autonomous runtime resilience bridging network blackouts, partitioned nodes, and extreme latency. Employs mathematically verified Conflict-Free Replicated Data Types (CRDTs) for seamless multi-master convergence.
+            </p>
+            <span class="fullform-tag">CRDT Convergence • Vector Clocks • Adaptive</span>
+          </div>
+
+          <!-- S: Systems Standard -->
+          <div class="fullform-card">
+            <div class="fullform-letter-badge letter-color-cycle" style="animation-delay: 5.25s;">S</div>
+            <div class="fullform-word">Systems Standard</div>
+            <p class="fullform-desc">
+              A comprehensive four-layer systems architecture—spanning cryptographic local storage (L1), transport consensus (L2), environmental telemetry (L3), and Zero Intent Loss human interface design (L4).
+            </p>
+            <span class="fullform-tag">4-Layer Stack • Conformance Tiers • Zero Invariants</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         The 4-Layer ODC Model (Interactive Explorer)
+         ======================================================================== -->
+    <section class="section-padding" id="four-layer-model">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Core Intellectual Contribution</span>
+          <h2 class="section-title">The Four-Layer ODC Model</h2>
+          <p class="section-subtitle">
+            A comprehensive systems stack organizing digital continuity into decoupled, verifiable layers—from persistent cryptographic local storage to continuous human interaction.
+          </p>
+        </div>
+
+        <div class="model-explorer-grid">
+          <!-- Left Column: Layer Tabs -->
+          <div class="layer-stack-list" role="tablist" aria-label="ODC Layers">
+            <!-- Layer 4 -->
+            <div class="layer-card-tab active" data-layer="layer-4" role="tab" tabindex="0">
+              <div class="layer-tab-header">
+                <span class="layer-tab-tag">L4 • APPLICATION</span>
+                <span style="font-size: 0.8rem; color: var(--emerald-resilience); font-weight: 700;">Zero Intent Loss</span>
+              </div>
+              <div class="layer-tab-title">Application & Continuity UX</div>
+              <div class="layer-tab-summary">
+                Optimistic UI rendering (<16ms), visual intent preservation, ambient status indicators, and human-in-the-loop conflict reconciliation.
+              </div>
+            </div>
+
+            <!-- Layer 3 -->
+            <div class="layer-card-tab" data-layer="layer-3" role="tab" tabindex="0">
+              <div class="layer-tab-header">
+                <span class="layer-tab-tag">L3 • RUNTIME</span>
+                <span style="font-size: 0.8rem; color: var(--cyan-primary); font-weight: 700;">Context Aware</span>
+              </div>
+              <div class="layer-tab-title">Runtime & Environmental Adaptation</div>
+              <div class="layer-tab-summary">
+                Active telemetry probing, degradation profiles (Optimal, Constrained, Offline), and battery/storage quota governance.
+              </div>
+            </div>
+
+            <!-- Layer 2 -->
+            <div class="layer-card-tab" data-layer="layer-2" role="tab" tabindex="0">
+              <div class="layer-tab-header">
+                <span class="layer-tab-tag">L2 • TRANSPORT</span>
+                <span style="font-size: 0.8rem; color: var(--blue-azure); font-weight: 700;">Distributed Consensus</span>
+              </div>
+              <div class="layer-tab-title">Transport, Synchronization & Consensus</div>
+              <div class="layer-tab-summary">
+                Multi-master delta replication, Conflict-Free Replicated Data Types (CRDTs), Vector Clocks, and store-and-forward outbox.
+              </div>
+            </div>
+
+            <!-- Layer 1 -->
+            <div class="layer-card-tab" data-layer="layer-1" role="tab" tabindex="0">
+              <div class="layer-tab-header">
+                <span class="layer-tab-tag">L1 • DURABILITY</span>
+                <span style="font-size: 0.8rem; color: #fff; font-weight: 700;">Storage Anchor</span>
+              </div>
+              <div class="layer-tab-title">Local Durability & Cryptographic Storage</div>
+              <div class="layer-tab-summary">
+                ACID snapshot storage, monotonic Write-Ahead Logging (WAL), Merkle hash provenance, and zero-loss crash recovery.
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Detail View -->
+          <div class="layer-detail-box" id="layer-detail-box">
+            <div>
+              <div class="detail-badge-row">
+                <span class="detail-layer-id">LAYER 4</span>
+                <span style="color: var(--text-dim);">•</span>
+                <a href="docs.html#layer-4" class="detail-spec-link">
+                  <span>View Full Specification</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+              </div>
+
+              <h3 class="detail-title">Application & Continuity UX</h3>
+
+              <div class="detail-invariant-quote">
+                "The Zero Intent Loss UX Invariant: A user's expressed intention shall never be rejected, wiped, or blocked by the UI due to network latency or disconnection."
+              </div>
+
+              <div class="detail-specs-grid">
+                <div class="detail-spec-card">
+                  <div class="detail-spec-label">Core Responsibility</div>
+                  <div class="detail-spec-val" id="detail-responsibility">
+                    Human trust, zero-loss input, optimistic state presentation, non-blocking sync affordances, and human-in-the-loop conflict resolution.
+                  </div>
+                </div>
+                <div class="detail-spec-card">
+                  <div class="detail-spec-label">Primary Primitives</div>
+                  <div class="detail-spec-val" id="detail-primitives">
+                    Optimistic DOM Mutations, Form Intent Auto-Save, Ambient Status Pills, Field-Level Visual Diffing.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--cyan-primary); margin-bottom: 8px;">
+                Normative Implementation Pattern
+              </div>
+              <pre class="detail-code-block"><code>// Layer 4: Non-blocking optimistic mutation
+async function submitPatientRecord(vitals) {
+  // 1. Immediately render optimistic state in DOM (<16ms)
+  ui.renderOptimisticRecord({ id: vitals.id, status: 'BUFFERED_LOCAL' });
+
+  // 2. Commit transaction to Layer 1 local durability
+  await odcs.commitMutation('patients', 'UPDATE', vitals);
+
+  // 3. Ambient continuity badge automatically reflects outbox queue
+  ui.updateContinuityBadge();
+}</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Live Embedded "Continuity Simulator" Lab with Oscilloscope Waveform
+         ======================================================================== -->
+    <section class="section-padding" id="simulator">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Interactive Demonstration</span>
+          <h2 class="section-title">Experience Digital Continuity in Action</h2>
+          <p class="section-subtitle">
+            Simulate network degradation, severe latency, and total blackouts in real-time. Watch the live oscilloscope carrier wave and inspect how transactions persist in local durability until convergence.
+          </p>
+        </div>
+
+        <div class="simulator-container">
+          <!-- Top Control Strip -->
+          <div class="sim-top-bar">
+            <div class="sim-title-group">
+              <h3>ODCS Live Runtime Lab</h3>
+              <p>Simulating node: <code style="color: var(--cyan-primary);">node-client-7f89b2</code> • Protocol: ODCS-SPEC-001</p>
+            </div>
+
+            <div class="sim-controls-group">
+              <span style="font-size: 0.84rem; font-weight: 700; color: var(--text-muted);">Network Mode:</span>
+              <button id="sim-net-online" class="network-toggle-btn active-online">Online (Fiber)</button>
+              <button id="sim-net-throttled" class="network-toggle-btn">Constrained (3G)</button>
+              <button id="sim-net-offline" class="network-toggle-btn">Offline (Blackout)</button>
+            </div>
+          </div>
+
+          <!-- Real-Time Signal Waveform Oscilloscope -->
+          <div class="oscilloscope-wrapper">
+            <div class="oscilloscope-canvas-box">
+              <canvas id="oscilloscope-canvas"></canvas>
+            </div>
+            <div class="oscilloscope-telemetry-badge">
+              <div>Latency: <span id="sim-rtt-display" class="telemetry-val">42ms RTT</span></div>
+              <div>Throughput: <span id="sim-throughput-display" class="telemetry-val">100 Mbps</span></div>
+              <div>Packet Loss: <span id="sim-loss-display" class="telemetry-val">0.0%</span></div>
+            </div>
+          </div>
+
+          <!-- Simulator Body -->
+          <div class="sim-layout-grid">
+            <!-- Mutation & State Panel -->
+            <div class="sim-panel">
+              <div class="sim-panel-title">
+                <span>Application Mutation (Layer 4)</span>
+                <div id="sim-status-pill" class="continuity-pill synced">
+                  <span class="status-indicator"></span>
+                  <span id="sim-status-label">All Changes Synced</span>
+                </div>
+              </div>
+
+              <form id="sim-mutation-form">
+                <input type="text" id="sim-mutation-input" class="sim-form-input" placeholder="Type a mutation (e.g. 'Prescription updated: 50mg Amoxicillin')..." required />
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Commit Local Mutation</button>
+              </form>
+
+              <!-- Quick Scenarios -->
+              <div style="margin-top: 18px;">
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim);">Automated Test Scenarios:</span>
+                <div class="quick-scenarios-row">
+                  <button type="button" id="btn-scenario-tunnel" class="btn-scenario">🚇 Subway Tunnel Test (3 mutations)</button>
+                  <button type="button" id="btn-scenario-satellite" class="btn-scenario">🛰️ Satellite High-Latency Profile</button>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-subtle); font-size: 0.84rem; color: var(--text-muted);">
+                <span>L1 WAL Outbox: <strong id="sim-outbox-count" style="color: var(--cyan-primary);">0</strong> pending</span>
+                <span>Durability Engine: <strong style="color: #fff;">IndexedDB / WAL</strong></span>
+              </div>
+            </div>
+
+            <!-- Diagnostics & Journal Stream -->
+            <div class="sim-panel">
+              <div class="sim-panel-title">
+                <span>Disruption-Tolerant Merkle Stream</span>
+                <span style="font-size: 0.74rem; color: var(--text-dim); text-transform: none;">Event Journal</span>
+              </div>
+
+              <div id="sim-event-stream" class="sim-event-stream">
+                <!-- Dynamically populated by simulator.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         ODCS Conformance Calculator (Interactive)
+         ======================================================================== -->
+    <section class="section-padding" id="conformance" style="background: rgba(255, 255, 255, 0.015);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Audit & Certification</span>
+          <h2 class="section-title">ODCS Conformance Calculator</h2>
+          <p class="section-subtitle">
+            Evaluate your distributed architecture against the normative ODCS conformance matrix to determine your official compliance class.
+          </p>
+        </div>
+
+        <div class="conformance-box">
+          <!-- Left: Checkbox Criteria -->
+          <div class="conformance-criteria-list">
+            <label class="conformance-checkbox-label">
+              <input type="checkbox" class="conformance-check" checked />
+              <div>
+                <strong>L1 Persistent Local Authority:</strong> Writes commit to non-volatile local storage (IndexedDB/SQLite WAL) before network I/O.
+              </div>
+            </label>
+
+            <label class="conformance-checkbox-label">
+              <input type="checkbox" class="conformance-check" checked />
+              <div>
+                <strong>L4 Zero Intent Loss UX:</strong> Forms auto-save instantly and UI renders optimistic feedback without blocking spinners.
+              </div>
+            </label>
+
+            <label class="conformance-checkbox-label">
+              <input type="checkbox" class="conformance-check" checked />
+              <div>
+                <strong>L3 Dynamic Telemetry Sensing:</strong> Probes RTT/jitter actively; switches to throttled or offline policies automatically.
+              </div>
+            </label>
+
+            <label class="conformance-checkbox-label">
+              <input type="checkbox" class="conformance-check" />
+              <div>
+                <strong>L2 Multi-Master Replication:</strong> Store-and-forward outbox with exponential backoff and jitter algorithms.
+              </div>
+            </label>
+
+            <label class="conformance-checkbox-label">
+              <input type="checkbox" class="conformance-check" />
+              <div>
+                <strong>L2 CRDT Mathematical Convergence:</strong> Uses verified CRDTs (LWW, AW-ORSet) and Vector Clocks to guarantee identical state.
+              </div>
+            </label>
+          </div>
+
+          <!-- Right: Calculated Result -->
+          <div class="conformance-result-card">
+            <div id="calc-tier-badge" class="conformance-tier-badge">Class S</div>
+            <div id="calc-tier-name" class="conformance-tier-name">Standard Conformance</div>
+            <p id="calc-tier-desc" class="conformance-tier-desc">
+              Satisfies core durability, basic delta synchronization, and environmental network detection. Recommended for production mobile and web suites.
+            </p>
+            <a href="docs.html#odc-model" class="btn-primary" style="width: 100%; justify-content: center;">
+              <span>View Conformance Spec</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Technical Specifications Suite
+         ======================================================================== -->
+    <section class="section-padding" id="specifications">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Formal Technical Track</span>
+          <h2 class="section-title">Open Specifications Suite</h2>
+          <p class="section-subtitle">
+            Rigorous RFC-style technical documents defining contracts, state transitions, security bounds, and conformance classes.
+          </p>
+        </div>
+
+        <div class="specs-matrix-grid">
+          <div class="spec-card">
+            <div>
+              <span class="spec-card-badge">ODCS-SPEC-001</span>
+              <h3 class="spec-card-title">ODC Master Model</h3>
+              <p class="spec-card-excerpt">
+                The core architectural RFC defining the 4-layer taxonomy, cross-cutting security, threat modeling, and conformance tiers (Class C, S, E).
+              </p>
+            </div>
+            <a href="docs.html#odc-model" class="spec-card-action">
+              <span>Read Spec</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="spec-card">
+            <div>
+              <span class="spec-card-badge">ODCS-SPEC-002</span>
+              <h3 class="spec-card-title">Layer 1: Local Durability</h3>
+              <p class="spec-card-excerpt">
+                Normative standards for atomic Write-Ahead Logging (WAL), monotonic sequence numbering (UUIDv7), and quota eviction protection.
+              </p>
+            </div>
+            <a href="docs.html#layer-1" class="spec-card-action">
+              <span>Read Spec</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="spec-card">
+            <div>
+              <span class="spec-card-badge">ODCS-SPEC-003</span>
+              <h3 class="spec-card-title">Layer 2: Transport & Sync</h3>
+              <p class="spec-card-excerpt">
+                Multi-master replication, Vector Clocks, Conflict-Free Replicated Data Types (CRDTs), and disruption-tolerant outbox scheduling.
+              </p>
+            </div>
+            <a href="docs.html#layer-2" class="spec-card-action">
+              <span>Read Spec</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="spec-card">
+            <div>
+              <span class="spec-card-badge">ODCS-SPEC-004</span>
+              <h3 class="spec-card-title">Layer 3: Runtime Adaptation</h3>
+              <p class="spec-card-excerpt">
+                Active/passive network telemetry, operational degradation modes, exponential backoff with jitter, and hardware-aware throttling.
+              </p>
+            </div>
+            <a href="docs.html#layer-3" class="spec-card-action">
+              <span>Read Spec</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="spec-card">
+            <div>
+              <span class="spec-card-badge">ODCS-SPEC-005</span>
+              <h3 class="spec-card-title">Layer 4: Application UX</h3>
+              <p class="spec-card-excerpt">
+                Zero Intent Loss principles, optimistic state rendering (<16ms), ambient continuity indicators, and conflict arbitration dialogs.
+              </p>
+            </div>
+            <a href="docs.html#layer-4" class="spec-card-action">
+              <span>Read Spec</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+
+          <div class="spec-card">
+            <div>
+              <span class="spec-card-badge">ODCS-BRAND-001</span>
+              <h3 class="spec-card-title">Brand & Logo Identity</h3>
+              <p class="spec-card-excerpt">
+                Canonical specifications for The Continuity Nexus mark, 4-layer chromatic palette, vector assets, and typography rules.
+              </p>
+            </div>
+            <a href="docs.html#brand-identity" class="spec-card-action">
+              <span>Read Spec</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Real-World Applications & Use Cases
+         ======================================================================== -->
+    <section class="section-padding" id="applications" style="background: rgba(255, 255, 255, 0.01);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Impact Domains</span>
+          <h2 class="section-title">Where Continuity is Mission-Critical</h2>
+          <p class="section-subtitle">
+            ODCS is engineered for environments where connectivity drops are not rare exceptions, but daily operational realities.
+          </p>
+        </div>
+
+        <div class="usecases-grid">
+          <div class="usecase-card">
+            <div class="usecase-icon">🏥</div>
+            <div class="usecase-title">Healthcare & Rural Triage</div>
+            <div class="usecase-desc">
+              Paramedics and community health workers record patient vitals and administer medications in connectivity dead zones without data loss.
+            </div>
+          </div>
+
+          <div class="usecase-card">
+            <div class="usecase-icon">🚒</div>
+            <div class="usecase-title">Civil Defense & Field Ops</div>
+            <div class="usecase-desc">
+              Emergency first responders share casualty assessments and incident telemetry over ad-hoc peer-to-peer mesh networks.
+            </div>
+          </div>
+
+          <div class="usecase-card">
+            <div class="usecase-icon">💳</div>
+            <div class="usecase-title">Fintech & Transit Commerce</div>
+            <div class="usecase-desc">
+              Point-of-Sale (POS) transactions aboard underground subways, high-speed rail, and commercial flights converge automatically on arrival.
+            </div>
+          </div>
+
+          <div class="usecase-card">
+            <div class="usecase-icon">🎓</div>
+            <div class="usecase-title">Education & Research</div>
+            <div class="usecase-desc">
+              Curriculum materials and distributed systems research testbeds accessible across rural campuses with intermittent satellite connectivity.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================
+         Academic Citation & Governance
+         ======================================================================== -->
+    <section class="section-padding" id="governance">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Global Credibility</span>
+          <h2 class="section-title">Open Governance & Academic Citation</h2>
+          <p class="section-subtitle">
+            ODCS is an open, community-driven standard welcoming university labs, distributed systems researchers, and open-source contributors.
+          </p>
+        </div>
+
+        <div class="citation-box">
+          <div class="citation-header">
+            <div class="citation-title">Cite ODCS in Academic Papers & Research</div>
+            <button id="btn-copy-bibtex" class="btn-copy">Copy BibTeX</button>
+          </div>
+          <pre class="citation-code"><code id="bibtex-code">@techreport{odcs2026spec,
+  title       = {{Open Digital Continuity Standard (ODCS): A Four-Layer Architectural Model for Disruption-Tolerant Distributed Systems}},
+  author      = {{ODCS Working Group}},
+  institution = {{Open Digital Continuity Initiative}},
+  year        = {2026},
+  month       = {October},
+  type        = {Standard Specification Draft},
+  number      = {ODCS-SPEC-001},
+  url         = {https://odcs.in/spec/v1.0/}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================================
+       Institutional Footer
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-title">ODCS Initiative</div>
+          <p class="footer-brand-desc">
+            Open Digital Continuity Standard is a global open technology standard establishing deterministic software continuity across network disruptions, outages, and offline environments.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Specifications</div>
+          <ul class="footer-links-list">
+            <li><a href="docs.html#odc-model" class="footer-link">ODC Master Model</a></li>
+            <li><a href="docs.html#layer-1" class="footer-link">Layer 1: Local Durability</a></li>
+            <li><a href="docs.html#layer-2" class="footer-link">Layer 2: Transport & Sync</a></li>
+            <li><a href="docs.html#layer-3" class="footer-link">Layer 3: Runtime Adaptation</a></li>
+            <li><a href="docs.html#layer-4" class="footer-link">Layer 4: Application UX</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <ul class="footer-links-list">
+            <li><a href="docs.html#architecture" class="footer-link">Systems Architecture</a></li>
+            <li><a href="docs.html#implementation-guide" class="footer-link">Implementation Recipes</a></li>
+            <li><a href="docs.html#brand-identity" class="footer-link">Official Logo & Brand ID</a></li>
+            <li><a href="docs.html#faq" class="footer-link">Technical FAQ</a></li>
+            <li><a href="examples/vanilla-odcs-client/" class="footer-link">Reference Client Demo</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Community</div>
+          <ul class="footer-links-list">
+            <li><a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Repository</a></li>
+            <li><a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-/blob/main/CONTRIBUTING.md" class="footer-link">Contribution Guide</a></li>
+            <li><a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-/blob/main/ROADMAP.md" class="footer-link">2026-2028 Roadmap</a></li>
+            <li><a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-/blob/main/LICENSE" class="footer-link">Apache 2.0 License</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Open Digital Continuity Standard Working Group. Licensed under Apache 2.0.
+        </div>
+        <div>
+          Domain: <strong style="color: var(--cyan-primary);">odcs.in</strong> • Eating our own dog food (100% Offline PWA Ready)
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/globe.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/simulator.js"></script>
+</body>
+</html>

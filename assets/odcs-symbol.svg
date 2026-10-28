@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 660" width="100%" height="100%">
+  <defs>
+    <!-- Cyan to Azure Gradient (Left loop top & twist) -->
+    <linearGradient id="odcsCyanAzure" x1="0%" y1="20%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#00F0FF" />
+      <stop offset="30%" stop-color="#00D2FF" />
+      <stop offset="70%" stop-color="#0077FE" />
+      <stop offset="100%" stop-color="#0047E0" />
+    </linearGradient>
+
+    <!-- Deep Cobalt / Navy Under-ribbon Shadow -->
+    <linearGradient id="odcsUnderfold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#001845" />
+      <stop offset="50%" stop-color="#002875" />
+      <stop offset="100%" stop-color="#0055D4" />
+    </linearGradient>
+
+    <!-- S-Curve Front Shading -->
+    <linearGradient id="odcsSCurve" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00359E" />
+      <stop offset="45%" stop-color="#0066FF" />
+      <stop offset="85%" stop-color="#00D8F6" />
+      <stop offset="100%" stop-color="#00F5D4" />
+    </linearGradient>
+
+    <!-- S-Loop Inner Shadow -->
+    <linearGradient id="odcsInnerS" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#002266" />
+      <stop offset="50%" stop-color="#0050B3" />
+      <stop offset="100%" stop-color="#00A3FF" />
+    </linearGradient>
+
+    <!-- Digital Cube Gradients -->
+    <linearGradient id="cubeGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F0FF" />
+      <stop offset="100%" stop-color="#0088FF" />
+    </linearGradient>
+    <linearGradient id="cubeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0072FF" />
+      <stop offset="100%" stop-color="#0040C0" />
+    </linearGradient>
+    <linearGradient id="cubeGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FFAA" />
+      <stop offset="100%" stop-color="#00C8FF" />
+    </linearGradient>
+
+    <!-- Subtle Depth Shadow -->
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#002b80" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <g filter="url(#softShadow)">
+    <!-- 1. LEFT LOOP BACK / UNDER-LAYER (Dark rich cobalt curve) -->
+    <path d="M 270 540 C 140 540 50 435 50 320 C 50 205 140 100 270 100 C 375 100 455 175 515 260 L 440 330 C 395 265 340 200 270 200 C 190 200 150 255 150 320 C 150 385 190 440 270 440 C 345 440 405 385 460 315 L 530 385 C 465 475 380 540 270 540 Z"
+          fill="url(#odcsUnderfold)" />
+
+    <!-- 2. LEFT LOOP FRONT / HIGHLIGHT RIBBON (Glowing Turquoise / Cyan to Blue) -->
+    <!-- Sweeps around the front outer bevel of the left O-loop -->
+    <path d="M 270 100 C 140 100 50 205 50 320 C 50 380 75 435 120 480 C 128 440 150 360 210 275 C 270 190 350 145 445 130 C 395 110 335 100 270 100 Z"
+          fill="url(#odcsCyanAzure)" />
+
+    <!-- 3. INNER CRESCENT ACCENT (Soft turquoise interior gleam) -->
+    <path d="M 270 540 C 200 540 150 500 120 450 C 155 490 210 520 270 520 C 350 520 415 470 475 400 L 515 440 C 450 505 365 540 270 540 Z"
+          fill="url(#odcsCyanAzure)" opacity="0.9" />
+
+    <!-- 4. CENTER DIAGONAL BRIDGE (Front Möbius twist crossing over to right) -->
+    <path d="M 210 275 C 290 360 410 490 535 520 C 605 538 680 530 740 490 C 670 500 600 480 540 420 C 475 355 400 255 330 185 C 285 215 245 245 210 275 Z"
+          fill="url(#odcsCyanAzure)" />
+
+    <!-- 5. RIGHT "S" UPPER CREST & INNER CURVE (Deep navy to blue under-arch) -->
+    <path d="M 540 310 C 590 235 670 170 770 170 C 815 170 855 185 890 215 L 830 285 C 805 270 780 260 750 260 C 690 260 635 305 590 365 L 540 310 Z"
+          fill="url(#odcsInnerS)" />
+
+    <!-- 6. RIGHT LOOP "S" RIBBON (The bold flowing S-shape) -->
+    <!-- Sweeps from center top, down around right bottom, back inward, and curves up toward the digital cubes -->
+    <path d="M 460 325 C 520 235 625 150 760 150 C 830 150 890 185 925 240 C 875 250 820 280 770 330 C 720 380 690 435 700 480 C 710 520 745 545 790 545 C 840 545 885 515 920 460 L 980 515 C 930 595 860 640 780 640 C 695 640 625 590 605 505 C 590 440 625 365 675 305 C 720 250 775 220 825 210 C 790 200 750 200 710 220 C 630 260 550 365 470 460 L 410 400 C 430 375 445 350 460 325 Z"
+          fill="url(#odcsSCurve)" />
+
+    <!-- 7. S-CURVE TOP TERMINAL (Curling up to meet the data blocks) -->
+    <path d="M 750 240 C 775 215 810 195 850 185 L 850 230 C 825 235 800 248 780 265 Z"
+          fill="url(#odcsCyanAzure)" />
+
+    <!-- 8. ASCENDING DIGITAL CONTINUITY DATA CUBES (The signature voxel packets) -->
+    <!-- Cube 1 (Large lower-left): Azure-Cyan -->
+    <rect x="765" y="145" width="58" height="58" rx="7" fill="url(#cubeGrad1)" transform="rotate(-1 765 145)" />
+
+    <!-- Cube 2 (Medium lower-right): Cobalt Blue -->
+    <rect x="838" y="190" width="56" height="56" rx="7" fill="url(#cubeGrad2)" />
+
+    <!-- Cube 3 (Upper right center): Deep Royal Blue -->
+    <rect x="850" y="130" width="48" height="48" rx="6" fill="url(#cubeGrad2)" opacity="0.95" />
+
+    <!-- Cube 4 (Top apex): Vibrant Aqua / Emerald Cyan -->
+    <rect x="912" y="85" width="42" height="42" rx="5" fill="url(#cubeGrad3)" />
+  </g>
+</svg>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODCS Reference Client — Vanilla ES6 Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="brand">ODCS Reference Client</div>
+      <div class="subtitle">Demonstrating 4-Layer Digital Continuity in Pure JavaScript</div>
+    </header>
+
+    <!-- Layer 3 & 4 Status Card -->
+    <div class="card">
+      <div class="card-title">Continuity Status (Layer 3 & 4)</div>
+      
+      <div class="control-row">
+        <span class="control-label">Simulate Network Context:</span>
+        <select id="network-select">
+          <option value="OPTIMAL_ONLINE">Optimal Online (High Speed)</option>
+          <option value="CONSTRAINED">Constrained (Low Bandwidth / 3G)</option>
+          <option value="OFFLINE">Total Offline Blackout</option>
+        </select>
+      </div>
+
+      <div class="control-row">
+        <span class="control-label">Ambient UX State:</span>
+        <div id="continuity-badge" class="badge badge-synchronized">
+          <span class="badge-dot"></span>
+          <span id="badge-label">All Changes Synced</span>
+        </div>
+      </div>
+
+      <div class="meta-stats">
+        <span>Layer 1 WAL Outbox: <strong id="outbox-count">0</strong> queued</span>
+        <span>Node ID: <code id="node-id">...</code></span>
+      </div>
+    </div>
+
+    <!-- Application Mutation Card -->
+    <div class="card">
+      <div class="card-title">Continuous Data Record (Layer 1 & 4)</div>
+      <form id="task-form" class="input-row">
+        <input type="text" id="task-input" placeholder="Type a mutation (e.g. Patient Vitals or Note)..." required />
+        <button type="submit" class="btn-primary">Commit Record</button>
+      </form>
+    </div>
+
+    <!-- Entity Snapshot Store Card -->
+    <div class="card">
+      <div class="card-title">Local Entity Snapshot Store</div>
+      <ul id="task-list" class="task-list">
+        <!-- Rendered dynamically -->
+      </ul>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

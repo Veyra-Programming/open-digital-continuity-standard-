@@ -1,0 +1,16 @@
+{
+  "name": "Open Digital Continuity Standard (ODCS)",
+  "short_name": "ODCS",
+  "description": "Digital experiences that endure without the network. An open 4-layer standard for disruption-tolerant software.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080C14",
+  "theme_color": "#00F2FE",
+  "icons": [
+    {
+      "src": "./assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
