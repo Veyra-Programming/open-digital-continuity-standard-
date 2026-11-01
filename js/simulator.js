@@ -36,6 +36,10 @@ class OdcsHomepageSimulator {
     // Scenario buttons
     this.btnScenarioTunnel = document.getElementById('btn-scenario-tunnel');
     this.btnScenarioSatellite = document.getElementById('btn-scenario-satellite');
+
+    // Journal stream actions
+    this.btnCopyStream = document.getElementById('btn-copy-stream');
+    this.btnClearStream = document.getElementById('btn-clear-stream');
   }
 
   // --- Real-Time Signal Waveform Oscilloscope ---
@@ -45,8 +49,18 @@ class OdcsHomepageSimulator {
     const ctx = canvas.getContext('2d');
 
     const renderWave = () => {
-      const width = canvas.width = canvas.parentElement.offsetWidth;
-      const height = canvas.height = canvas.parentElement.offsetHeight;
+      const parent = canvas.parentElement;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = parent.offsetWidth || 300;
+      const height = parent.offsetHeight || 80;
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
       const midY = height / 2;
 
       ctx.clearRect(0, 0, width, height);
@@ -134,6 +148,29 @@ class OdcsHomepageSimulator {
     if (this.btnScenarioSatellite) {
       this.btnScenarioSatellite.addEventListener('click', () => this.runSatelliteScenario());
     }
+
+    if (this.btnCopyStream) {
+      this.btnCopyStream.addEventListener('click', async () => {
+        const text = this.eventLog.map(e => `[${e.tag}] ${e.text}`).join('\n');
+        try {
+          await navigator.clipboard.writeText(text);
+          const orig = this.btnCopyStream.textContent;
+          this.btnCopyStream.textContent = '✓ Copied';
+          setTimeout(() => this.btnCopyStream.textContent = orig, 1800);
+        } catch {
+          this.btnCopyStream.textContent = 'Copied';
+        }
+      });
+    }
+
+    if (this.btnClearStream) {
+      this.btnClearStream.addEventListener('click', () => {
+        this.eventLog = [];
+        if (this.eventStream) {
+          this.eventStream.innerHTML = '<div style="font-size:0.78rem;color:var(--text-dim);padding:8px;">Stream journal cleared. Ready for new mutations.</div>';
+        }
+      });
+    }
   }
 
   setMode(mode) {
@@ -195,9 +232,9 @@ class OdcsHomepageSimulator {
     this.logEvent('L2-SYNC', `Packaging delta batch (${batchCount} operations with Vector Clock)...`, 'sync');
     this.updateUI();
 
-    const latency = this.networkMode === 'CONSTRAINED' ? 1800 : 650;
+    const latency = this.networkMode === 'CONSTRAINED' ? 1800 : 450;
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (this.networkMode === 'OFFLINE') {
         this.isSyncing = false;
         this.logEvent('L2-SYNC', 'Transport socket severed mid-batch. Mutations safely retained in L1 WAL outbox.', 'alert');
@@ -205,7 +242,28 @@ class OdcsHomepageSimulator {
         return;
       }
 
-      this.logEvent('L2-SYNC', `Server verified CRDT convergence ACK for ${batchCount} records.`, 'sync');
+      // Attempt live Cloudflare Worker sync or fallback to simulation
+      try {
+        const deltaPayload = {
+          clock: { "client-simulator": Date.now() },
+          mutations: this.outboxQueue.map(m => ({ mutation_id: m.id, action: m.val }))
+        };
+        const res = await fetch('/api/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(deltaPayload)
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const colo = res.headers.get('X-ODCS-Edge-Colo') || 'CF-Edge';
+          this.logEvent('L2-SYNC', `Edge [${colo}] converged CRDT ACK (${data.acknowledged_mutations?.length || batchCount} ops).`, 'sync');
+        } else {
+          this.logEvent('L2-SYNC', `Server verified CRDT convergence ACK for ${batchCount} records.`, 'sync');
+        }
+      } catch {
+        this.logEvent('L2-SYNC', `Server verified CRDT convergence ACK for ${batchCount} records.`, 'sync');
+      }
+
       this.outboxQueue = [];
       this.isSyncing = false;
       this.logEvent('L4-UX', 'All local mutations confirmed synchronized across peers.', 'sync');

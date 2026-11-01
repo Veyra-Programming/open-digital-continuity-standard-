@@ -40,7 +40,7 @@ PWAs do **not** define how data mutations are durably queued, how distributed mu
 ---
 
 ### Q7: What technology stack does ODCS require?
-**A:** ODCS is technology-agnostic. The standard defines interface contracts and protocols, not a single language runtime. Reference implementations are provided in TypeScript/JavaScript (Web & Node), with bindings adaptable to Kotlin/Android, Swift/iOS, Go, Rust, and Python.
+**A:** ODCS is technology-agnostic. The standard defines interface contracts and protocols, not a single language runtime. Reference implementations are provided in TypeScript/JavaScript (Web & Node), with bindings adaptable to Kotlin/Android, Swift/iOS, Go, Rust, and Haven Language.
 
 ---
 

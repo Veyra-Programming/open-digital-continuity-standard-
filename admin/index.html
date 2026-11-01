@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ODCS & Heaven Language — Institutional Administrator Cockpit</title>
+  
+  <meta name="description" content="Centralized Administrator Cockpit for the Open Digital Continuity Standard (ODCS) and Haven (Heaven Language) toolchain. Upload and distribute Windows .exe binaries, manage cryptographic verification, broadcast announcements, and monitor Layer 1 ledgers.">
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="../css/responsive-pro.css">
+</head>
+<body class="admin-body">
+
+  <!-- Background Cyber Atmosphere -->
+  <div class="admin-grid-overlay" aria-hidden="true"></div>
+  <div class="admin-glow-orb orb-1" aria-hidden="true"></div>
+  <div class="admin-glow-orb orb-2" aria-hidden="true"></div>
+
+  <!-- ========================================================================
+       SECURITY GATEWAY / AUTHENTICATION MODAL (DEFAULT LOCK)
+       ======================================================================== -->
+  <div id="auth-lock-overlay" class="auth-lock-overlay">
+    <div class="auth-lock-card">
+      <div class="auth-lock-badge">
+        <span class="auth-lock-dot"></span>
+        <span>ROOT PRIVILEGES REQUIRED</span>
+      </div>
+
+      <div class="auth-lock-icon">🔐</div>
+      <h2 class="auth-lock-title">Admin Mission Control</h2>
+      <p class="auth-lock-desc">
+        Authentication gate for the Open Digital Continuity Standard & Heaven Language binary distribution repository.
+      </p>
+
+      <form id="admin-auth-form" class="auth-form" onsubmit="return false;">
+        <div class="auth-input-group">
+          <label for="admin-pin-input" class="auth-label">Administrator Security Key / PIN</label>
+          <div class="auth-input-wrapper">
+            <input type="password" id="admin-pin-input" class="auth-input" placeholder="Enter root access key..." autocomplete="current-password" autofocus />
+            <button type="button" id="btn-toggle-pin" class="btn-toggle-pin" title="Show/Hide Key">👁️</button>
+          </div>
+          <span class="auth-hint">Default Dev Root Key: <code>odcs-haven-2026</code></span>
+        </div>
+
+        <div id="auth-error-msg" class="auth-error-msg" style="display: none;"></div>
+
+        <div class="auth-btn-row">
+          <button type="submit" id="btn-login-admin" class="btn-primary auth-submit-btn">
+            <span>Verify & Authenticate</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <button type="button" id="btn-quick-unlock" class="btn-secondary auth-quick-btn" title="One-click unlock for authorized developers">
+            ⚡ Quick Unlock (Dev)
+          </button>
+        </div>
+      </form>
+
+      <div class="auth-lock-footer">
+        <a href="../index.html" class="auth-back-link">&larr; Return to ODCS Public Site</a>
+        <a href="../heaven/" class="auth-back-link">Haven Portal &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       ADMIN DASHBOARD APP INTERFACE
+       ======================================================================== -->
+  <div id="admin-app" class="admin-app" style="display: none;">
+
+    <!-- Top Admin Header -->
+    <header class="admin-topbar">
+      <div class="admin-topbar-left">
+        <div class="admin-logo-wrapper">
+          <img src="../assets/haven/haven_logo.png" alt="Haven Logo" class="admin-logo-img" onerror="this.src='../assets/favicon.svg'" />
+          <div>
+            <div class="admin-title">ODCS GUARDIAN OS <span class="admin-role-badge">SUPER_ADMIN</span></div>
+            <div class="admin-subtitle">Root Binary Control & System Governance Center</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-topbar-center">
+        <div class="node-health-indicator">
+          <span class="health-pulse"></span>
+          <span>NODE: <strong>alpha-node-01</strong></span>
+          <span class="sep">•</span>
+          <span>CONSENSUS: <strong style="color: var(--emerald-primary);">100% HEALTHY</strong></span>
+          <span class="sep">•</span>
+          <span>TIME: <span id="admin-clock">00:00:00 UTC</span></span>
+        </div>
+      </div>
+
+      <div class="admin-topbar-right">
+        <a href="../heaven/" class="btn-admin-nav" target="_blank" title="View Public Heaven Portal">
+          🌐 View /heaven/
+        </a>
+        <a href="../index.html" class="btn-admin-nav" target="_blank" title="View Public ODCS Portal">
+          🏛️ ODCS Standard
+        </a>
+        <button type="button" id="btn-admin-logout" class="btn-admin-logout" title="Lock Administrator Session">
+          🔒 Lock Session
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Admin Workspace Layout (Sidebar Navigation + Main Stage) -->
+    <div class="admin-layout">
+      <!-- Admin Sidebar Navigation -->
+      <aside class="admin-sidebar">
+        <nav class="sidebar-nav">
+          <div class="sidebar-group-title">CORE OPERATIONS</div>
+          <button type="button" class="sidebar-tab active" data-tab="tab-upload">
+            <span class="tab-icon">🚀</span>
+            <span class="tab-text">EXE Binary Uploader</span>
+            <span class="tab-pill">NEW</span>
+          </button>
+          <button type="button" class="sidebar-tab" data-tab="tab-releases">
+            <span class="tab-icon">📦</span>
+            <span class="tab-text">Binary Inventory</span>
+            <span id="badge-release-count" class="tab-count">3</span>
+          </button>
+
+          <div class="sidebar-group-title">GOVERNANCE & BROADCAST</div>
+          <button type="button" class="sidebar-tab" data-tab="tab-announcement">
+            <span class="tab-icon">📢</span>
+            <span class="tab-text">Site Announcements</span>
+          </button>
+          <button type="button" class="sidebar-tab" data-tab="tab-controls">
+            <span class="tab-icon">🎛️</span>
+            <span class="tab-text">Emergency Controls</span>
+          </button>
+
+          <div class="sidebar-group-title">CRYPTOGRAPHIC AUDIT</div>
+          <button type="button" class="sidebar-tab" data-tab="tab-audit">
+            <span class="tab-icon">📜</span>
+            <span class="tab-text">Layer 1 Audit Ledger</span>
+            <span id="badge-audit-count" class="tab-count">0</span>
+          </button>
+          <button type="button" class="sidebar-tab" data-tab="tab-telemetry">
+            <span class="tab-icon">📊</span>
+            <span class="tab-text">Storage & Telemetry</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="storage-usage-box">
+            <div class="storage-label-row">
+              <span>Local Repository Storage</span>
+              <span id="storage-used-txt">0.0 MB</span>
+            </div>
+            <div class="storage-progress-bar">
+              <div id="storage-progress-fill" class="storage-fill" style="width: 5%;"></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Stage Viewport -->
+      <main class="admin-main">
+
+        <!-- ====================================================================
+             TAB 1: HEAVEN LANGUAGE EXE BINARY UPLOADER
+             ==================================================================== -->
+        <section id="tab-upload" class="admin-tab-content active">
+          <div class="tab-header">
+            <div>
+              <h2 class="tab-title">Heaven Language Executable (.EXE) Binary Center</h2>
+              <p class="tab-subtitle">
+                Deploy, compile, and distribute new Windows <code>.exe</code> binaries, installers, and compilers to <code>www.odcs.in/heaven/</code> with automated SHA-256 cryptographic genesis hashing.
+              </p>
+            </div>
+            <div class="tab-header-actions">
+              <button type="button" id="btn-seed-demo-binaries" class="btn-secondary" title="Restore Default Built-in Heaven v1.0.0 Binaries">
+                ↻ Refresh Default Binaries
+              </button>
+            </div>
+          </div>
+
+          <!-- Upload Dropzone Card -->
+          <div class="admin-card upload-card">
+            <div class="upload-dropzone" id="upload-dropzone">
+              <input type="file" id="exe-file-input" accept=".exe,.zip,.tar.gz,.msi" class="file-input-hidden" />
+              <div class="dropzone-content">
+                <div class="dropzone-icon">📥</div>
+                <h3 class="dropzone-title">Drop your Heaven Language <code>.exe</code> binary here</h3>
+                <p class="dropzone-desc">
+                  Supports <code>haven.exe</code>, <code>havenw.exe</code>, installers, or any compiled Heaven Language Windows executable (up to 250 MB).
+                </p>
+                <button type="button" id="btn-browse-file" class="btn-primary dropzone-browse-btn">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                  <span>Select Executable from Computer</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Upload File Selected State Preview -->
+            <div id="file-staging-panel" class="file-staging-panel" style="display: none;">
+              <div class="staged-file-header">
+                <div class="staged-file-icon">⚡</div>
+                <div class="staged-file-meta">
+                  <div class="staged-filename" id="staged-filename">haven-custom-build.exe</div>
+                  <div class="staged-specs">
+                    <span id="staged-filesize">0 KB</span> • 
+                    <span id="staged-filetype">PE32+ Executable (Windows)</span> • 
+                    <span id="staged-pe-status" class="status-tag status-success">Valid MZ Header</span>
+                  </div>
+                </div>
+                <button type="button" id="btn-cancel-staged" class="btn-staged-cancel" title="Deselect File">✕</button>
+              </div>
+
+              <!-- Realtime SHA-256 Checksum Computation -->
+              <div class="checksum-calc-box">
+                <div class="checksum-label-row">
+                  <span>Web Crypto API Hardware Hash:</span>
+                  <span id="checksum-status" class="status-calculating">Calculating SHA-256...</span>
+                </div>
+                <div class="checksum-value-row">
+                  <code id="staged-sha256" class="checksum-code">Computing cryptographic signature...</code>
+                  <button type="button" id="btn-copy-staged-sha" class="btn-icon-copy" title="Copy Hash">📋</button>
+                </div>
+              </div>
+
+              <!-- Metadata Configuration Form -->
+              <div class="upload-metadata-grid">
+                <div class="form-group">
+                  <label for="meta-release-title" class="form-label">Display Release Title *</label>
+                  <input type="text" id="meta-release-title" class="form-input" placeholder="e.g. Haven Windows CLI Compiler (v1.0.1)" />
+                </div>
+
+                <div class="form-group">
+                  <label for="meta-version" class="form-label">Version Tag *</label>
+                  <input type="text" id="meta-version" class="form-input" placeholder="e.g. 1.0.1 or 1.1.0-beta" value="1.0.1" />
+                </div>
+
+                <div class="form-group">
+                  <label for="meta-arch" class="form-label">Target Architecture *</label>
+                  <select id="meta-arch" class="form-input form-select">
+                    <option value="x64 (AMD64)">x64 (AMD64 / Intel 64-bit)</option>
+                    <option value="ARM64">ARM64 (Qualcomm / Windows on ARM)</option>
+                    <option value="x86 (32-bit)">x86 (Legacy 32-bit)</option>
+                    <option value="Universal Win64">Universal Win64</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="meta-channel" class="form-label">Release Channel *</label>
+                  <select id="meta-channel" class="form-input form-select">
+                    <option value="Production Stable">Production Stable</option>
+                    <option value="Release Candidate">Release Candidate (RC)</option>
+                    <option value="Hotfix Patch">Hotfix Patch</option>
+                    <option value="Nightly / Experimental">Nightly / Experimental</option>
+                  </select>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="meta-description" class="form-label">Release Notes & Technical Scope</label>
+                  <textarea id="meta-description" class="form-input form-textarea" rows="3" placeholder="Brief explanation of updates, fixed grammar rules, compiler optimizations, or runtime patches..."></textarea>
+                </div>
+
+                <div class="form-group full-width form-checkbox-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="meta-publish-now" checked />
+                    <span><strong>Publish immediately</strong> to public downloads matrix at <code>/heaven/#downloads</code></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Commit Upload Button & Progress -->
+              <div class="upload-actions-row">
+                <button type="button" id="btn-commit-upload" class="btn-primary btn-commit-upload">
+                  <span>Deploy & Store Executable</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </button>
+              </div>
+
+              <div id="upload-progress-container" class="upload-progress-container" style="display: none;">
+                <div class="progress-labels">
+                  <span id="upload-stage-txt">Writing executable to IndexedDB local vault...</span>
+                  <span id="upload-pct-txt">0%</span>
+                </div>
+                <div class="upload-progress-bar">
+                  <div id="upload-progress-fill" class="upload-progress-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             TAB 2: BINARY INVENTORY & RELEASE REPOSITORY TABLE
+             ==================================================================== -->
+        <section id="tab-releases" class="admin-tab-content">
+          <div class="tab-header">
+            <div>
+              <h2 class="tab-title">Active Binary Inventory & Release Repository</h2>
+              <p class="tab-subtitle">
+                Manage all distributed Haven (Heaven Language) binaries, setup packages, and CLI toolchains. Toggle public availability, verify integrity, or delete retired versions.
+              </p>
+            </div>
+            <div class="tab-header-actions">
+              <button type="button" class="btn-primary" onclick="switchToTab('tab-upload')">
+                + Upload New .EXE
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div class="table-responsive">
+              <table class="admin-table" id="releases-table">
+                <thead>
+                  <tr>
+                    <th>Executable / Package</th>
+                    <th>Version & Arch</th>
+                    <th>Channel</th>
+                    <th>Filesize</th>
+                    <th>Cryptographic SHA-256</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="releases-table-body">
+                  <!-- Populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             TAB 3: SITE ANNOUNCEMENTS & GLOBAL BROADCAST
+             ==================================================================== -->
+        <section id="tab-announcement" class="admin-tab-content">
+          <div class="tab-header">
+            <div>
+              <h2 class="tab-title">Global Broadcast & Site Announcement Bar</h2>
+              <p class="tab-subtitle">
+                Configure the alert banner displayed across the header of the primary ODCS portal (<code>www.odcs.in/</code>) and the Haven language portal (<code>www.odcs.in/heaven/</code>).
+              </p>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <form id="announcement-form" class="admin-form">
+              <div class="form-group form-checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="announcement-active" checked />
+                  <span><strong>Enable Announcement Banner</strong> (broadcast live across website)</span>
+                </label>
+              </div>
+
+              <div class="form-group">
+                <label for="announcement-text" class="form-label">Banner Message Content</label>
+                <input type="text" id="announcement-text" class="form-input" placeholder="e.g. Haven (Heaven Language) Production Release v1.0.0 is now live for Windows x64!" />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group half-width">
+                  <label for="announcement-link-text" class="form-label">Call-to-Action Link Text</label>
+                  <input type="text" id="announcement-link-text" class="form-input" placeholder="e.g. Download Now →" value="Download Binaries →" />
+                </div>
+                <div class="form-group half-width">
+                  <label for="announcement-link-url" class="form-label">Target Link URL</label>
+                  <input type="text" id="announcement-link-url" class="form-input" placeholder="e.g. heaven/#downloads" value="heaven/#downloads" />
+                </div>
+              </div>
+
+              <!-- Live Preview Box -->
+              <div class="preview-box">
+                <span class="preview-tag">LIVE BANNER PREVIEW</span>
+                <div class="preview-banner" id="banner-preview">
+                  <span class="preview-badge">ANNOUNCEMENT</span>
+                  <span id="preview-text-content">Haven Language v1.0.0 Production Toolchain is live.</span>
+                  <a href="#" id="preview-link-content" class="preview-link">Download Now →</a>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" id="btn-save-announcement" class="btn-primary">
+                  Save & Broadcast Live
+                </button>
+                <button type="button" id="btn-reset-announcement" class="btn-secondary">
+                  Reset to Default
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             TAB 4: EMERGENCY CONTROLS & GOVERNANCE
+             ==================================================================== -->
+        <section id="tab-controls" class="admin-tab-content">
+          <div class="tab-header">
+            <div>
+              <h2 class="tab-title">Emergency Governance & Platform Settings</h2>
+              <p class="tab-subtitle">
+                Institutional controls for the ODCS validator network, compiler optimization standards, and fail-safe toggles.
+              </p>
+            </div>
+          </div>
+
+          <div class="controls-grid">
+            <!-- Control Card 1 -->
+            <div class="admin-card control-card">
+              <div class="control-header">
+                <div class="control-icon">🛑</div>
+                <div>
+                  <h4 class="control-title">Maintenance Mode Fail-Safe</h4>
+                  <p class="control-desc">Puts public portals into read-only state for critical infrastructure updates.</p>
+                </div>
+              </div>
+              <div class="control-toggle-row">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggle-maintenance">
+                  <span class="toggle-slider"></span>
+                </label>
+                <span id="maintenance-status-txt" class="toggle-status">INACTIVE (Public Access Live)</span>
+              </div>
+            </div>
+
+            <!-- Control Card 2 -->
+            <div class="admin-card control-card">
+              <div class="control-header">
+                <div class="control-icon">📥</div>
+                <div>
+                  <h4 class="control-title">Binary Downloads Gate</h4>
+                  <p class="control-desc">Globally permits or freezes executable downloads across all distribution mirrors.</p>
+                </div>
+              </div>
+              <div class="control-toggle-row">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggle-downloads" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span id="downloads-status-txt" class="toggle-status toggle-active">PERMITTED (Downloads Active)</span>
+              </div>
+            </div>
+
+            <!-- Control Card 3 -->
+            <div class="admin-card control-card">
+              <div class="control-header">
+                <div class="control-icon">⚡</div>
+                <div>
+                  <h4 class="control-title">Web Compiler Execution</h4>
+                  <p class="control-desc">Enables interactive bytecode emulation in the online Haven Playground.</p>
+                </div>
+              </div>
+              <div class="control-toggle-row">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggle-playground" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span id="playground-status-txt" class="toggle-status toggle-active">ENABLED</span>
+              </div>
+            </div>
+
+            <!-- Control Card 4: Factory Reset -->
+            <div class="admin-card control-card danger-card">
+              <div class="control-header">
+                <div class="control-icon">⚠️</div>
+                <div>
+                  <h4 class="control-title">Purge Custom Storage & Factory Reset</h4>
+                  <p class="control-desc">Clears all custom uploaded binaries from IndexedDB and resets system state.</p>
+                </div>
+              </div>
+              <button type="button" id="btn-purge-storage" class="btn-danger">
+                Purge Custom Data & Reset
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             TAB 5: LAYER 1 AUDIT LEDGER (APPEND-ONLY CRYPTOGRAPHIC LOG)
+             ==================================================================== -->
+        <section id="tab-audit" class="admin-tab-content">
+          <div class="tab-header">
+            <div>
+              <h2 class="tab-title">Layer 1 Cryptographic Audit Ledger</h2>
+              <p class="tab-subtitle">
+                Append-only immutable record of all administrative operations, binary deployments, hash calculations, and policy revisions, linked in a continuous Merkle parent-hash chain.
+              </p>
+            </div>
+            <div class="tab-header-actions">
+              <button type="button" id="btn-export-audit" class="btn-secondary" title="Export Ledger as JSON">
+                💾 Export Ledger (JSON)
+              </button>
+              <button type="button" id="btn-verify-audit-chain" class="btn-primary" title="Verify Merkle Hash Chain Integrity">
+                🛡️ Verify Chain Integrity
+              </button>
+            </div>
+          </div>
+
+          <div class="admin-card">
+            <div id="chain-integrity-alert" class="chain-alert" style="display: none;"></div>
+
+            <div class="table-responsive">
+              <table class="admin-table" id="audit-table">
+                <thead>
+                  <tr>
+                    <th>Height</th>
+                    <th>Timestamp</th>
+                    <th>Action Event</th>
+                    <th>Actor / Guardian</th>
+                    <th>Parent Hash</th>
+                    <th>Genesis Event Hash</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-table-body">
+                  <!-- Populated via admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ====================================================================
+             TAB 6: STORAGE & TELEMETRY
+             ==================================================================== -->
+        <section id="tab-telemetry" class="admin-tab-content">
+          <div class="tab-header">
+            <div>
+              <h2 class="tab-title">Node Telemetry & Local Storage Vault</h2>
+              <p class="tab-subtitle">
+                Hardware resource utilization, IndexedDB binary storage breakdown, and browser Web Crypto engine diagnostics.
+              </p>
+            </div>
+          </div>
+
+          <div class="telemetry-grid">
+            <div class="admin-card telemetry-card">
+              <div class="tele-val" id="tele-storage-used">0.0 MB</div>
+              <div class="tele-label">IndexedDB Vault Usage</div>
+            </div>
+            <div class="admin-card telemetry-card">
+              <div class="tele-val" id="tele-release-count">3</div>
+              <div class="tele-label">Active Binary Builds</div>
+            </div>
+            <div class="admin-card telemetry-card">
+              <div class="tele-val" id="tele-crypto-engine">Hardware AES/SHA</div>
+              <div class="tele-label">WebCrypto Acceleration</div>
+            </div>
+            <div class="admin-card telemetry-card">
+              <div class="tele-val" id="tele-uptime">00:00:00</div>
+              <div class="tele-label">Session Duration</div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="admin-toast" class="admin-toast" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/admin.js"></script>
+</body>
+</html>

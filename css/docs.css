@@ -630,6 +630,7 @@
   font-weight: 800;
   background: linear-gradient(135deg, #ffffff 15%, #7dd3fc 65%, #00f0ff 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 22px;
   line-height: 1.2;
@@ -1173,6 +1174,102 @@
 }
 
 /* --------------------------------------------------------------------------
+   Mobile Backdrop & Floating Scroll-To-Top for Docs
+   -------------------------------------------------------------------------- */
+.docs-sidebar-mobile-head {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  background: rgba(5, 9, 20, 0.95);
+}
+
+.mobile-head-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--cyan-primary);
+  letter-spacing: 1.2px;
+}
+
+.docs-sidebar-close-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.docs-sidebar-close-btn:hover {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: #f43f5e;
+  color: #f43f5e;
+}
+
+.docs-mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 16, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 940;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.docs-mobile-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.docs-floating-top-btn {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(7, 14, 28, 0.92);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: var(--cyan-primary);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 16px rgba(0, 240, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 900;
+}
+
+.docs-floating-top-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.docs-floating-top-btn:hover {
+  background: rgba(0, 240, 255, 0.22);
+  border-color: var(--cyan-primary);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+  transform: translateY(-3px);
+}
+
+/* --------------------------------------------------------------------------
    Responsive Breakpoints
    -------------------------------------------------------------------------- */
 @media (max-width: 960px) {
@@ -1184,18 +1281,27 @@
     grid-template-columns: 1fr;
   }
 
+  .docs-sidebar-mobile-head {
+    display: flex;
+  }
+
   .docs-sidebar {
     position: fixed;
-    top: calc(var(--header-height) + 52px);
+    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
-    max-width: 380px;
-    height: calc(100vh - var(--header-height) - 52px);
+    max-width: 360px;
+    height: 100vh;
+    padding-top: calc(14px + env(safe-area-inset-top, 0px));
     background: rgba(6, 11, 24, 0.98);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
     transform: translateX(-100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 12px 0 40px rgba(0, 0, 0, 0.7);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 16px 0 50px rgba(0, 0, 0, 0.85);
     z-index: 950;
+    border-right: 1px solid rgba(0, 240, 255, 0.3);
   }
 
   .docs-sidebar.mobile-open {
@@ -1203,7 +1309,7 @@
   }
 
   .docs-main-content {
-    padding: 32px 24px 80px;
+    padding: 28px 20px 80px;
   }
 
   .spec-meta-top {
@@ -1216,17 +1322,21 @@
   }
 
   .docs-rendered-body h1 {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
 
   .docs-rendered-body h2 {
-    font-size: 1.45rem;
+    font-size: 1.4rem;
+  }
+
+  .docs-rendered-body table {
+    font-size: 0.82rem;
   }
 }
 
 @media (max-width: 640px) {
   .docs-main-content {
-    padding: 24px 16px 70px;
+    padding: 20px 14px 70px;
   }
 
   .spec-telemetry-grid {
@@ -1235,6 +1345,7 @@
 
   .docs-pagination {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .docs-pagination-card.next {
@@ -1248,10 +1359,21 @@
 
   .spec-meta-actions {
     width: 100%;
+    flex-direction: column;
   }
 
   .spec-meta-btn {
-    flex: 1;
+    width: 100%;
     justify-content: center;
+  }
+
+  .docs-mobile-current {
+    max-width: 50%;
+    font-size: 0.78rem;
+  }
+
+  .docs-sidebar-toggle-btn {
+    padding: 6px 10px;
+    font-size: 0.76rem;
   }
 }

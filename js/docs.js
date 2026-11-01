@@ -92,11 +92,42 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileDrawer();
   initSpecActionButtons();
   loadCurrentDocFromHash();
+  initGlobalAnnouncementSync();
 
   window.addEventListener('hashchange', () => {
     loadCurrentDocFromHash();
   });
 });
+
+function initGlobalAnnouncementSync() {
+  try {
+    const raw = localStorage.getItem('odcs_site_announcement');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (!data.active || !data.text) return;
+
+    let banner = document.getElementById('admin-global-announcement-bar');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'admin-global-announcement-bar';
+      banner.style.cssText = 'background: linear-gradient(90deg, rgba(168, 85, 247, 0.25), rgba(0, 240, 255, 0.2)); border-bottom: 1px solid rgba(168, 85, 247, 0.4); padding: 0.6rem 1.25rem; font-size: 0.88rem; text-align: center; color: #fff; position: relative; z-index: 1000; display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap;';
+      const header = document.getElementById('site-header');
+      if (header && header.parentNode) {
+        header.parentNode.insertBefore(banner, header);
+      } else {
+        document.body.prepend(banner);
+      }
+    }
+
+    banner.innerHTML = `
+      <span style="background: #a855f7; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 4px;">BROADCAST</span>
+      <span>📢 ${data.text}</span>
+      ${data.linkUrl ? `<a href="${data.linkUrl}" style="color: #00f0ff; font-weight: 700; text-decoration: none;">${data.linkText || 'Learn More →'}</a>` : ''}
+    `;
+  } catch (e) {
+    console.warn('[ODCS] Global announcement sync error:', e);
+  }
+}
 
 /* --------------------------------------------------------------------------
    Navigation & Routing
@@ -117,6 +148,9 @@ function initDocNavigation() {
         sidebar.classList.remove('mobile-open');
         const toggleBtn = document.getElementById('docs-sidebar-toggle');
         if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+        const backdrop = document.getElementById('docs-mobile-backdrop');
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.style.overflow = '';
       }
     });
   });
@@ -672,22 +706,54 @@ function initScrollEffects() {
 function initMobileDrawer() {
   const toggleBtn = document.getElementById('docs-sidebar-toggle');
   const sidebar = document.getElementById('docs-sidebar');
-  if (!toggleBtn || !sidebar) return;
+  const backdrop = document.getElementById('docs-mobile-backdrop');
+  const closeBtn = document.getElementById('docs-sidebar-close');
+  const scrollTopBtn = document.getElementById('docs-scroll-top-btn');
 
-  toggleBtn.addEventListener('click', () => {
-    const isOpen = sidebar.classList.toggle('mobile-open');
-    toggleBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
+  function setDrawer(open) {
+    if (!sidebar) return;
+    sidebar.classList.toggle('mobile-open', open);
+    if (toggleBtn) toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (backdrop) backdrop.classList.toggle('active', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = sidebar.classList.contains('mobile-open');
+      setDrawer(!isOpen);
+    });
+  }
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => setDrawer(false));
+  }
+
+  if (backdrop) {
+    backdrop.addEventListener('click', () => setDrawer(false));
+  }
 
   // Close drawer if user clicks outside of sidebar on mobile
   document.addEventListener('click', (e) => {
-    if (sidebar.classList.contains('mobile-open')) {
+    if (sidebar && sidebar.classList.contains('mobile-open')) {
       if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-        sidebar.classList.remove('mobile-open');
-        toggleBtn.setAttribute('aria-expanded', 'false');
+        setDrawer(false);
       }
     }
   });
+
+  // Floating scroll-to-top button
+  if (scrollTopBtn) {
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+      const show = window.scrollY > 280;
+      scrollTopBtn.classList.toggle('visible', show);
+    }, { passive: true });
+  }
 }
 
 /* --------------------------------------------------------------------------

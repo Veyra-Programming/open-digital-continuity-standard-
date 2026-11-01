@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 130" width="100%" height="100%">
+  <defs>
+    <!-- Cyan to Azure Gradient (Left loop top & twist) -->
+    <linearGradient id="logoCyanAzure" x1="0%" y1="20%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#00F0FF" />
+      <stop offset="30%" stop-color="#00D2FF" />
+      <stop offset="70%" stop-color="#0077FE" />
+      <stop offset="100%" stop-color="#0047E0" />
+    </linearGradient>
+
+    <!-- Deep Cobalt / Navy Under-ribbon Shadow -->
+    <linearGradient id="logoUnderfold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#001845" />
+      <stop offset="50%" stop-color="#002875" />
+      <stop offset="100%" stop-color="#0055D4" />
+    </linearGradient>
+
+    <!-- S-Curve Front Shading -->
+    <linearGradient id="logoSCurve" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00359E" />
+      <stop offset="45%" stop-color="#0066FF" />
+      <stop offset="85%" stop-color="#00D8F6" />
+      <stop offset="100%" stop-color="#00F5D4" />
+    </linearGradient>
+
+    <!-- S-Loop Inner Shadow -->
+    <linearGradient id="logoInnerS" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#002266" />
+      <stop offset="50%" stop-color="#0050B3" />
+      <stop offset="100%" stop-color="#00A3FF" />
+    </linearGradient>
+
+    <!-- Digital Cube Gradients -->
+    <linearGradient id="logoCube1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F0FF" />
+      <stop offset="100%" stop-color="#0088FF" />
+    </linearGradient>
+    <linearGradient id="logoCube2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0072FF" />
+      <stop offset="100%" stop-color="#0040C0" />
+    </linearGradient>
+    <linearGradient id="logoCube3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FFAA" />
+      <stop offset="100%" stop-color="#00C8FF" />
+    </linearGradient>
+  </defs>
+
+  <!-- Official Logo Mark on Left (scaled & centered) -->
+  <g transform="translate(10, 12) scale(0.17)">
+    <!-- 1. Left loop underfold -->
+    <path d="M 270 540 C 140 540 50 435 50 320 C 50 205 140 100 270 100 C 375 100 455 175 515 260 L 440 330 C 395 265 340 200 270 200 C 190 200 150 255 150 320 C 150 385 190 440 270 440 C 345 440 405 385 460 315 L 530 385 C 465 475 380 540 270 540 Z" fill="url(#logoUnderfold)" />
+    <!-- 2. Left loop front ribbon -->
+    <path d="M 270 100 C 140 100 50 205 50 320 C 50 380 75 435 120 480 C 128 440 150 360 210 275 C 270 190 350 145 445 130 C 395 110 335 100 270 100 Z" fill="url(#logoCyanAzure)" />
+    <!-- 3. Inner crescent accent -->
+    <path d="M 270 540 C 200 540 150 500 120 450 C 155 490 210 520 270 520 C 350 520 415 470 475 400 L 515 440 C 450 505 365 540 270 540 Z" fill="url(#logoCyanAzure)" opacity="0.9" />
+    <!-- 4. Center diagonal bridge -->
+    <path d="M 210 275 C 290 360 410 490 535 520 C 605 538 680 530 740 490 C 670 500 600 480 540 420 C 475 355 400 255 330 185 C 285 215 245 245 210 275 Z" fill="url(#logoCyanAzure)" />
+    <!-- 5. Right S upper under-arch -->
+    <path d="M 540 310 C 590 235 670 170 770 170 C 815 170 855 185 890 215 L 830 285 C 805 270 780 260 750 260 C 690 260 635 305 590 365 L 540 310 Z" fill="url(#logoInnerS)" />
+    <!-- 6. Right S ribbon -->
+    <path d="M 460 325 C 520 235 625 150 760 150 C 830 150 890 185 925 240 C 875 250 820 280 770 330 C 720 380 690 435 700 480 C 710 520 745 545 790 545 C 840 545 885 515 920 460 L 980 515 C 930 595 860 640 780 640 C 695 640 625 590 605 505 C 590 440 625 365 675 305 C 720 250 775 220 825 210 C 790 200 750 200 710 220 C 630 260 550 365 470 460 L 410 400 C 430 375 445 350 460 325 Z" fill="url(#logoSCurve)" />
+    <!-- 7. S top terminal -->
+    <path d="M 750 240 C 775 215 810 195 850 185 L 850 230 C 825 235 800 248 780 265 Z" fill="url(#logoCyanAzure)" />
+    <!-- 8. Ascending Data Cubes -->
+    <rect x="765" y="145" width="58" height="58" rx="7" fill="url(#logoCube1)" />
+    <rect x="838" y="190" width="56" height="56" rx="7" fill="url(#logoCube2)" />
+    <rect x="850" y="130" width="48" height="48" rx="6" fill="url(#logoCube2)" opacity="0.95" />
+    <rect x="912" y="85" width="42" height="42" rx="5" fill="url(#logoCube3)" />
+  </g>
+
+  <!-- Typography Lockup -->
+  <g transform="translate(195, 20)">
+    <!-- Primary Acronym Wordmark -->
+    <text x="0" y="52" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-weight="900" font-size="44" letter-spacing="4" fill="#FFFFFF">
+      ODCS
+    </text>
+    <!-- Tagline / Expanded Title -->
+    <text x="2" y="78" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-weight="600" font-size="12" letter-spacing="2" fill="#94A3B8">
+      OPEN DIGITAL CONTINUITY STANDARD
+    </text>
+    <!-- Spec Tag -->
+    <rect x="180" y="24" width="76" height="22" rx="5" fill="rgba(0, 240, 255, 0.12)" stroke="rgba(0, 240, 255, 0.4)" stroke-width="1.2" />
+    <text x="190" y="39" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="10.5" font-weight="700" letter-spacing="1.2" fill="#00F0FF">
+      SPEC v1.0
+    </text>
+  </g>
+</svg>

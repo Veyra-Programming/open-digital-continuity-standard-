@@ -92,11 +92,45 @@ document.addEventListener('DOMContentLoaded', () => {
   initMasterOfflineSwitch();
   initTypewriterMantra();
   initLayerModelExplorer();
+  initGlobeMobileTabs();
+  initFloatingHUD();
   initConformanceCalculator();
   initMobileMenu();
   initCitationCopy();
   initCardMouseGlow();
+  initGlobalAnnouncementSync();
 });
+
+// Admin Broadcast Announcement Listener
+function initGlobalAnnouncementSync() {
+  try {
+    const raw = localStorage.getItem('odcs_site_announcement');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (!data.active || !data.text) return;
+
+    let banner = document.getElementById('admin-global-announcement-bar');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'admin-global-announcement-bar';
+      banner.style.cssText = 'background: linear-gradient(90deg, rgba(168, 85, 247, 0.25), rgba(0, 240, 255, 0.2)); border-bottom: 1px solid rgba(168, 85, 247, 0.4); padding: 0.6rem 1.25rem; font-size: 0.88rem; text-align: center; color: #fff; position: relative; z-index: 1000; display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap;';
+      const header = document.getElementById('site-header');
+      if (header && header.parentNode) {
+        header.parentNode.insertBefore(banner, header);
+      } else {
+        document.body.prepend(banner);
+      }
+    }
+
+    banner.innerHTML = `
+      <span style="background: #a855f7; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 4px;">BROADCAST</span>
+      <span>📢 ${data.text}</span>
+      ${data.linkUrl ? `<a href="${data.linkUrl}" style="color: #00f0ff; font-weight: 700; text-decoration: none;">${data.linkText || 'Learn More →'}</a>` : ''}
+    `;
+  } catch (e) {
+    console.warn('[ODCS] Global announcement sync error:', e);
+  }
+}
 
 // 1. Service Worker Registration Guard
 function initServiceWorker() {
@@ -302,30 +336,86 @@ function initContinuityPill() {
 
 // 4. Interactive 4-Layer ODC Model Explorer
 function initLayerModelExplorer() {
-  const tabCards = document.querySelectorAll('.layer-card-tab');
+  const desktopTabCards = document.querySelectorAll('.layer-card-tab');
+  const mobileTabs = document.querySelectorAll('.layer-mobile-tab');
   const detailBox = document.getElementById('layer-detail-box');
-  if (!tabCards.length || !detailBox) return;
+  const copyBtn = document.getElementById('btn-copy-layer-code');
+  const copyBtnText = document.getElementById('copy-layer-code-text');
+  if (!detailBox) return;
 
-  tabCards.forEach(tab => {
+  let currentCode = ODC_LAYERS_DATA['layer-4'].code;
+
+  function switchLayer(layerKey) {
+    const data = ODC_LAYERS_DATA[layerKey];
+    if (!data) return;
+    currentCode = data.code;
+
+    // Sync desktop tabs
+    desktopTabCards.forEach(t => {
+      const active = t.getAttribute('data-layer') === layerKey;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    // Sync mobile tabs
+    mobileTabs.forEach(t => {
+      const active = t.getAttribute('data-layer') === layerKey;
+      t.classList.toggle('active', active);
+      t.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+
+    // Update detail box
+    detailBox.querySelector('.detail-layer-id').textContent = data.id;
+    detailBox.querySelector('.detail-title').textContent = data.title;
+    detailBox.querySelector('.detail-invariant-quote').textContent = `"${data.invariant}"`;
+    detailBox.querySelector('#detail-responsibility').textContent = data.responsibility;
+    detailBox.querySelector('#detail-primitives').textContent = data.primitives;
+    
+    const codeEl = detailBox.querySelector('#detail-code-content') || detailBox.querySelector('.detail-code-block code');
+    if (codeEl) {
+      codeEl.textContent = data.code;
+    }
+    
+    const specLink = detailBox.querySelector('.detail-spec-link');
+    if (specLink) specLink.setAttribute('href', data.specHref);
+
+    // Reset copy button
+    if (copyBtn) {
+      copyBtn.classList.remove('copied');
+      if (copyBtnText) copyBtnText.textContent = 'Copy Code';
+    }
+  }
+
+  desktopTabCards.forEach(tab => {
     tab.addEventListener('click', () => {
       const layerKey = tab.getAttribute('data-layer');
-      const data = ODC_LAYERS_DATA[layerKey];
-      if (!data) return;
-
-      tabCards.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-
-      detailBox.querySelector('.detail-layer-id').textContent = data.id;
-      detailBox.querySelector('.detail-title').textContent = data.title;
-      detailBox.querySelector('.detail-invariant-quote').textContent = `"${data.invariant}"`;
-      detailBox.querySelector('#detail-responsibility').textContent = data.responsibility;
-      detailBox.querySelector('#detail-primitives').textContent = data.primitives;
-      detailBox.querySelector('.detail-code-block').textContent = data.code;
-      
-      const specLink = detailBox.querySelector('.detail-spec-link');
-      if (specLink) specLink.setAttribute('href', data.specHref);
+      switchLayer(layerKey);
     });
   });
+
+  mobileTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const layerKey = tab.getAttribute('data-layer');
+      switchLayer(layerKey);
+    });
+  });
+
+  // Copy code snippet to clipboard
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(currentCode);
+        copyBtn.classList.add('copied');
+        if (copyBtnText) copyBtnText.textContent = '✓ Copied!';
+        setTimeout(() => {
+          copyBtn.classList.remove('copied');
+          if (copyBtnText) copyBtnText.textContent = 'Copy Code';
+        }, 2200);
+      } catch {
+        if (copyBtnText) copyBtnText.textContent = 'Copied!';
+      }
+    });
+  }
 }
 
 // 5. Interactive Conformance Tier Calculator
@@ -334,27 +424,36 @@ function initConformanceCalculator() {
   const tierBadge = document.getElementById('calc-tier-badge');
   const tierName = document.getElementById('calc-tier-name');
   const tierDesc = document.getElementById('calc-tier-desc');
+  const meterBar = document.getElementById('conformance-meter-bar');
+  const meterScore = document.getElementById('conformance-score-pct');
   if (!checkboxes.length || !tierBadge) return;
 
   function evaluateTier() {
     let checkedCount = 0;
     checkboxes.forEach(cb => { if (cb.checked) checkedCount++; });
+    const scorePct = Math.round((checkedCount / checkboxes.length) * 100);
+
+    if (meterBar) meterBar.style.width = `${scorePct}%`;
+    if (meterScore) meterScore.textContent = `${scorePct}%`;
 
     if (checkedCount >= 5) {
       tierBadge.textContent = 'Class E';
       tierBadge.style.color = 'var(--emerald-resilience)';
       tierName.textContent = 'Enterprise / Mission-Critical Conformance';
       tierDesc.textContent = 'Satisfies full 4-layer standard with CRDT convergence, Merkle DAG provenance, multi-transport failover, and zero intent loss.';
+      if (meterBar) meterBar.style.background = 'linear-gradient(90deg, #00f0ff 0%, #00ffaa 100%)';
     } else if (checkedCount >= 3) {
       tierBadge.textContent = 'Class S';
       tierBadge.style.color = 'var(--cyan-primary)';
       tierName.textContent = 'Standard Conformance';
       tierDesc.textContent = 'Satisfies core durability, basic delta synchronization, and environmental network detection. Recommended for production apps.';
+      if (meterBar) meterBar.style.background = 'linear-gradient(90deg, #0077fe 0%, #00f0ff 100%)';
     } else {
       tierBadge.textContent = 'Class C';
       tierBadge.style.color = 'var(--amber-advisory)';
       tierName.textContent = 'Core Conformance';
       tierDesc.textContent = 'Satisfies foundational Layer 1 local persistence and Layer 4 optimistic user feedback. Suitable for basic offline form tools.';
+      if (meterBar) meterBar.style.background = 'linear-gradient(90deg, #fbbf24 0%, #00f0ff 100%)';
     }
   }
 
@@ -362,16 +461,107 @@ function initConformanceCalculator() {
   evaluateTier();
 }
 
-// 6. Mobile Menu Navigation
+// 6. Mobile Menu Navigation & Backdrop
 function initMobileMenu() {
   const menuBtn = document.getElementById('mobile-menu-toggle');
   const navLinks = document.getElementById('site-nav-links');
+  const backdrop = document.getElementById('mobile-menu-backdrop');
+  const drawerOfflineBtn = document.getElementById('mobile-drawer-offline-btn');
   if (!menuBtn || !navLinks) return;
 
-  menuBtn.addEventListener('click', () => navLinks.classList.toggle('mobile-open'));
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => navLinks.classList.remove('mobile-open'));
+  function setMobileMenu(open) {
+    menuBtn.classList.toggle('active', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    navLinks.classList.toggle('mobile-open', open);
+    if (backdrop) backdrop.classList.toggle('active', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = navLinks.classList.contains('mobile-open');
+    setMobileMenu(!isOpen);
   });
+
+  if (backdrop) {
+    backdrop.addEventListener('click', () => setMobileMenu(false));
+  }
+
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMobileMenu(false));
+  });
+
+  // Drawer Offline Button
+  if (drawerOfflineBtn) {
+    drawerOfflineBtn.addEventListener('click', () => {
+      setMobileMenu(false);
+      const heroSwitch = document.getElementById('master-offline-switch');
+      if (heroSwitch) heroSwitch.click();
+    });
+  }
+
+  // Escape key closes mobile menu
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navLinks.classList.contains('mobile-open')) {
+      setMobileMenu(false);
+    }
+  });
+}
+
+// 6b. Mobile Globe View Switcher Tabs
+function initGlobeMobileTabs() {
+  const tabs = document.querySelectorAll('#globe-mobile-view-tabs .globe-mobile-tab');
+  const station = document.getElementById('globe-command-station');
+  if (!tabs.length || !station) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetView = tab.getAttribute('data-tab'); // 'canvas' or 'sidebar'
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      station.setAttribute('data-mobile-view', targetView);
+      // Trigger resize for canvas if switching back to canvas
+      if (targetView === 'canvas') {
+        window.dispatchEvent(new Event('resize'));
+      }
+    });
+  });
+}
+
+// 6c. Mobile Floating Quick-Action HUD Dock
+function initFloatingHUD() {
+  const hud = document.getElementById('mobile-floating-hud');
+  const hudOfflineBtn = document.getElementById('hud-quick-offline');
+  const hudOfflineLabel = document.getElementById('hud-offline-label');
+  const hudScrollTopBtn = document.getElementById('hud-scroll-top');
+  if (!hud) return;
+
+  // Toggle offline from mobile HUD
+  if (hudOfflineBtn) {
+    hudOfflineBtn.addEventListener('click', () => {
+      const heroSwitch = document.getElementById('master-offline-switch');
+      if (heroSwitch) {
+        heroSwitch.click();
+        const isOffline = heroSwitch.classList.contains('active-offline');
+        hudOfflineBtn.classList.toggle('active-offline', isOffline);
+        if (hudOfflineLabel) hudOfflineLabel.textContent = isOffline ? 'Go Online' : 'Offline Test';
+      }
+    });
+  }
+
+  // Scroll to top button
+  if (hudScrollTopBtn) {
+    hudScrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    window.addEventListener('scroll', () => {
+      const shouldShow = window.scrollY > 280;
+      hudScrollTopBtn.style.opacity = shouldShow ? '1' : '0.5';
+      hudScrollTopBtn.style.pointerEvents = shouldShow ? 'auto' : 'none';
+    }, { passive: true });
+  }
 }
 
 // 7. BibTeX Citation Copy Helper

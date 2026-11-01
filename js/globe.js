@@ -597,9 +597,12 @@ class OdcsGlobalSignalsGlobe {
   initCanvasSize() {
     const handleResize = () => {
       const parent = this.canvas.parentElement;
-      const dpr = window.devicePixelRatio || 1;
-      this.width = parent.offsetWidth;
-      this.height = Math.min(parent.offsetWidth, 480);
+      if (!parent) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      const parentW = parent.offsetWidth || (parent.parentElement ? parent.parentElement.offsetWidth : 360);
+      this.width = parentW > 0 ? parentW : 360;
+      this.height = Math.min(this.width, parent.offsetHeight || 440);
+      if (this.height < 280) this.height = 360;
 
       this.canvas.width = this.width * dpr;
       this.canvas.height = this.height * dpr;
@@ -620,6 +623,8 @@ class OdcsGlobalSignalsGlobe {
   bindEvents() {
     let clickStartX = 0;
     let clickStartY = 0;
+    let pinchStartDist = 0;
+    let baseRadius = this.radius;
 
     this.canvas.addEventListener('mousedown', (e) => {
       this.isDragging = true;
@@ -666,7 +671,7 @@ class OdcsGlobalSignalsGlobe {
       }
     });
 
-    // Touch support for mobile devices
+    // Touch support for mobile devices: 1-finger drag and 2-finger pinch-to-zoom
     this.canvas.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         this.isDragging = true;
@@ -677,20 +682,37 @@ class OdcsGlobalSignalsGlobe {
         clickStartY = e.touches[0].clientY;
         this.dragVelocityX = 0;
         this.dragVelocityY = 0;
+      } else if (e.touches.length === 2) {
+        this.isDragging = false;
+        pinchStartDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        baseRadius = this.radius;
       }
     }, { passive: true });
 
     window.addEventListener('touchmove', (e) => {
-      if (!this.isDragging || e.touches.length !== 1) return;
-      const dx = e.touches[0].clientX - this.lastMouseX;
-      const dy = e.touches[0].clientY - this.lastMouseY;
-      this.dragVelocityX = dx * 0.006;
-      this.dragVelocityY = dy * 0.006;
-      this.rotationY += this.dragVelocityX;
-      this.rotationX += this.dragVelocityY;
-      this.rotationX = Math.max(-1.15, Math.min(1.15, this.rotationX));
-      this.lastMouseX = e.touches[0].clientX;
-      this.lastMouseY = e.touches[0].clientY;
+      if (e.touches.length === 2 && pinchStartDist > 0) {
+        const curDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        const factor = curDist / pinchStartDist;
+        const minR = Math.min(this.width, this.height) * 0.22;
+        const maxR = Math.min(this.width, this.height) * 0.48;
+        this.radius = Math.max(minR, Math.min(maxR, baseRadius * factor));
+      } else if (this.isDragging && e.touches.length === 1) {
+        const dx = e.touches[0].clientX - this.lastMouseX;
+        const dy = e.touches[0].clientY - this.lastMouseY;
+        this.dragVelocityX = dx * 0.006;
+        this.dragVelocityY = dy * 0.006;
+        this.rotationY += this.dragVelocityX;
+        this.rotationX += this.dragVelocityY;
+        this.rotationX = Math.max(-1.15, Math.min(1.15, this.rotationX));
+        this.lastMouseX = e.touches[0].clientX;
+        this.lastMouseY = e.touches[0].clientY;
+      }
     }, { passive: true });
 
     window.addEventListener('touchend', (e) => {
@@ -706,6 +728,7 @@ class OdcsGlobalSignalsGlobe {
           }
         }
       }
+      pinchStartDist = 0;
     });
 
     this.canvas.addEventListener('mouseleave', () => {
