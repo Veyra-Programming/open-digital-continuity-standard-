@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Legal, Governance & Intellectual Property Portal • ODCS</title>
+  
+  <meta name="description" content="Official legal documentation, privacy policy, terms of service, security disclosure, standards governance, and trademark guidelines for the Open Digital Continuity Standard (ODCS) and Haven Language.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/docs.css">
+  <link rel="stylesheet" href="css/enhancements.css">
+  <link rel="stylesheet" href="css/responsive-pro.css">
+  <style>
+    .legal-hero {
+      padding: 120px 0 60px;
+      text-align: center;
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .legal-tagline-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid var(--cyan-primary);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--cyan-primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+    }
+    .legal-hero-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .legal-hero-desc {
+      max-width: 720px;
+      margin: 0 auto;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .legal-nav-strip {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 2rem;
+    }
+    .legal-nav-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-dim);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legal-nav-pill:hover, .legal-nav-pill.active {
+      background: rgba(6, 182, 212, 0.15);
+      border-color: var(--cyan-primary);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    .legal-content-section {
+      padding: 60px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .legal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: clamp(24px, 5vw, 48px);
+      margin-bottom: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+    .legal-header {
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .legal-doc-id {
+      font-family: ui-monospace, Menlo, Consolas, monospace;
+      font-size: 0.8rem;
+      color: var(--cyan-primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .legal-doc-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 6px;
+    }
+    .legal-meta-badge {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid #10b981;
+      color: #10b981;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .legal-body {
+      color: #cbd5e1;
+      font-size: 0.96rem;
+      line-height: 1.8;
+    }
+    .legal-body h3 {
+      color: #fff;
+      font-size: 1.3rem;
+      margin: 2rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legal-body h3::before {
+      content: "§";
+      color: var(--cyan-primary);
+    }
+    .legal-body p { margin-bottom: 1.2rem; }
+    .legal-body ul, .legal-body ol {
+      margin-bottom: 1.4rem;
+      padding-left: 1.6rem;
+    }
+    .legal-body li { margin-bottom: 0.6rem; }
+    .legal-callout {
+      background: rgba(6, 182, 212, 0.08);
+      border-left: 4px solid var(--cyan-primary);
+      padding: 18px 24px;
+      border-radius: 0 10px 10px 0;
+      margin: 1.5rem 0;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+    }
+    .legal-callout.alert {
+      background: rgba(239, 68, 68, 0.08);
+      border-left-color: #ef4444;
+    }
+    .legal-callout.success {
+      background: rgba(16, 185, 129, 0.08);
+      border-left-color: #10b981;
+    }
+    .color-swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .color-swatch-card {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.85rem;
+    }
+    .color-box {
+      height: 48px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glowing Orbs -->
+  <div class="aurora-orb aurora-orb-1" aria-hidden="true"></div>
+  <div class="aurora-orb aurora-orb-2" aria-hidden="true"></div>
+
+  <!-- Top Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="brand-wrapper">
+        <a href="index.html" aria-label="ODCS Home">
+          <img src="assets/odcs-logo.svg" alt="ODCS Logo" class="brand-logo" />
+        </a>
+      </div>
+
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links" id="site-nav-links">
+          <li><a href="index.html" class="nav-link"><span class="nav-idx">01</span><span>Home</span></a></li>
+          <li><a href="index.html#four-layer-model" class="nav-link"><span class="nav-idx">02</span><span>4-Layer Model</span></a></li>
+          <li><a href="docs.html" class="nav-link"><span class="nav-idx">03</span><span>Documentation</span></a></li>
+          <li><a href="heaven/" class="nav-link" style="color: var(--cyan-primary); font-weight: 700;"><span class="nav-idx">04</span><span>Haven Lang ⚡</span></a></li>
+          <li><a href="legal.html" class="nav-link active" style="color: #c084fc; font-weight: 700;"><span class="nav-idx">05</span><span>Legal & Governance ⚖️</span></a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <div class="continuity-pill synced" title="Official Legal & Governance Track">
+          <span class="status-indicator"></span>
+          <div class="pill-text-group">
+            <span class="pill-node-title">ODCS-LEGAL</span>
+            <span class="pill-node-status">(CANONICAL)</span>
+          </div>
+        </div>
+        <a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Legal Hero Section -->
+  <section class="legal-hero">
+    <div class="container">
+      <div class="legal-tagline-badge">
+        <span>⚖️ OFFICIAL LEGAL & GOVERNANCE FRAMEWORK</span>
+      </div>
+      <h1 class="legal-hero-title">Standards Transparency & Trust</h1>
+      <p class="legal-hero-desc">
+        The Open Digital Continuity Standard (ODCS) and Haven Programming Language operate under open, royalty-free governance. We enshrine local data sovereignty, zero-loss digital integrity, and open technical access as non-negotiable architectural laws.
+      </p>
+
+      <!-- Quick Navigation Strip -->
+      <div class="legal-nav-strip">
+        <a href="#privacy" class="legal-nav-pill">🛡️ Privacy & Sovereignty</a>
+        <a href="#terms" class="legal-nav-pill">📜 Terms & Standards License</a>
+        <a href="#security" class="legal-nav-pill">🔒 Security Disclosure (VDP)</a>
+        <a href="#governance" class="legal-nav-pill">🏛️ Standards Governance</a>
+        <a href="#brand" class="legal-nav-pill">🎨 Trademark & Branding</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Legal Policies Container -->
+  <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+
+    <!-- ====================================================================
+         1. PRIVACY POLICY & LOCAL DATA SOVEREIGNTY
+         ==================================================================== -->
+    <article id="privacy" class="legal-card">
+      <div class="legal-header">
+        <div>
+          <div class="legal-doc-id">ODCS-LEGAL-001 • CANONICAL TRACK</div>
+          <h2 class="legal-doc-title">Privacy Policy & Local Data Sovereignty</h2>
+        </div>
+        <div class="legal-meta-badge">ZERO TRACKING VERIFIED</div>
+      </div>
+
+      <div class="legal-body">
+        <div class="legal-callout success">
+          <strong>The Sovereign Privacy Invariant:</strong> Under ODCS, local non-volatile storage is the private authority of record. We do not track, profile, monetize, or harvest user data. Your compute substrate belongs to you.
+        </div>
+
+        <h3>1. Architectural Principle: Zero Non-Consensual Telemetry</h3>
+        <p>
+          Contemporary web software routinely deploys surveillance scripts, session replays, and invasive cross-origin analytics. The Open Digital Continuity Standard Working Group categorically rejects these practices.
+        </p>
+        <ul>
+          <li><strong>No Personal Data Harvesting:</strong> We do not log client IP addresses, device identifiers, biometric information, or telemetry without your active, opt-in consent.</li>
+          <li><strong>In-Browser Execution Sovereignty:</strong> Code executed in the Haven Web Playground runs 100% locally in your browser's client-side V8/WebAssembly thread. Nothing you type is transmitted to a cloud telemetry server.</li>
+          <li><strong>Zero Cross-Site Trackers:</strong> We use no tracking pixels, advertising networks, or third-party behavioral trackers.</li>
+        </ul>
+
+        <h3>2. Local Storage, Service Workers & Offline Caching</h3>
+        <p>
+          To deliver offline digital continuity, the ODCS web portal uses standard client-side browser storage strictly for functional operational performance:
+        </p>
+        <ul>
+          <li><strong>Service Worker Cache (<code>sw.js</code>):</strong> Stores static assets (CSS, SVGs, specifications) so the site remains operational during subway tunnel transit, high-altitude flights, and rural network airgaps.</li>
+          <li><strong>Client Memory &amp; IndexedDB:</strong> The interactive continuity simulator stages mutation journals and CRDT outbox buffers purely within your browser sandbox.</li>
+          <li><strong>Visual Theme Preference:</strong> Stores your dark mode visual preference in <code>localStorage</code>.</li>
+        </ul>
+
+        <h3>3. Layer 3 Edge Network Telemetry</h3>
+        <p>
+          The ODCS network telemetry probe (<code>/api/telemetry/probe</code>) operated on Cloudflare Edge provides client applications with round-trip-time (RTT) latency measurements. This probe is completely stateless, performs zero database logging, and does not retain IP addresses or headers beyond the instantaneous TCP socket lifecycle.
+        </p>
+
+        <h3>4. Global Regulatory Compliance</h3>
+        <p>
+          Our strict data minimization and local sovereign architecture ensure full compliance with international privacy mandates:
+        </p>
+        <ul>
+          <li><strong>GDPR (EU 2016/679):</strong> Compliance by design (Article 25) and strict data minimization (Article 5(1)(c)).</li>
+          <li><strong>CCPA / CPRA (California):</strong> We do not sell, rent, or trade your personal information.</li>
+          <li><strong>Indian Digital Personal Data Protection Act (DPDP 2023):</strong> Zero unauthorized processing of digital personal data.</li>
+        </ul>
+
+        <h3>5. Contact &amp; Governance Custodian</h3>
+        <p>
+          For privacy inquiries or cryptographic verification audits, contact the Architecture Committee at <a href="mailto:privacy@odcs.in" style="color:var(--cyan-primary);">privacy@odcs.in</a> or Lead Architect <strong>Anirudha Puthraya</strong>.
+        </p>
+      </div>
+    </article>
+
+
+    <!-- ====================================================================
+         2. TERMS OF SERVICE & SPECIFICATION LICENSE
+         ==================================================================== -->
+    <article id="terms" class="legal-card">
+      <div class="legal-header">
+        <div>
+          <div class="legal-doc-id">ODCS-LEGAL-002 • STANDARD TRACK</div>
+          <h2 class="legal-doc-title">Terms of Service &amp; Standards Participation</h2>
+        </div>
+        <div class="legal-meta-badge">APACHE 2.0 LICENSED</div>
+      </div>
+
+      <div class="legal-body">
+        <h3>1. Standards Specification Grant (Royalty-Free)</h3>
+        <p>
+          The core documents comprising the Open Digital Continuity Standard (ODCS-SPEC-001 through ODCS-SPEC-005) are published as open technical specifications. You are granted an irrevocable, worldwide, royalty-free license under the <strong>Apache License 2.0</strong> to read, reference, implement, and distribute conforming software and hardware implementations.
+        </p>
+
+        <h3>2. Haven Programming Language Compiler &amp; Runtime</h3>
+        <p>
+          The Haven compiler binaries (<code>haven.exe</code>), standard libraries (<code>Lib/haven</code>, <code>Lib/odcs</code>), and CLI toolchain are open source software. Redistribution and use in source and binary forms, with or without modification, are permitted provided that copyright notices and disclaimers are preserved in accordance with the Haven Language Foundation License and Apache 2.0.
+        </p>
+
+        <h3>3. Conformance &amp; Non-Fragmentation Commitment</h3>
+        <p>
+          To maintain interoperability across distributed ledgers, CRDT synchronization pipelines, and emergency systems:
+        </p>
+        <ul>
+          <li>You may freely build custom implementations of the 4-layer model.</li>
+          <li>You shall not claim official <em>"ODCS-1.0.0 Conformance"</em> for systems that intentionally violate the core invariants: Local Durability WAL (L1), CRDT SEC Convergence (L2), Autonomic Adaptation (L3), or Zero Intent Loss (L4).</li>
+        </ul>
+
+        <h3>4. Disclaimer of Warranty &amp; Limitation of Liability</h3>
+        <div class="legal-callout">
+          <strong>LEGAL DISCLAIMER:</strong> THE ODCS SPECIFICATIONS AND HAVEN SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL ANIRUDHA PUTHRAYA, THE OPEN DIGITAL CONTINUITY STANDARD WORKING GROUP, OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SPECIFICATIONS OR RUNTIME.
+        </div>
+
+        <h3>5. Governing Law</h3>
+        <p>
+          These terms and standards participation policies are governed by and construed in accordance with applicable international open standards jurisprudence and relevant national intellectual property conventions.
+        </p>
+      </div>
+    </article>
+
+
+    <!-- ====================================================================
+         3. SECURITY ARCHITECTURE & VULNERABILITY DISCLOSURE (VDP)
+         ==================================================================== -->
+    <article id="security" class="legal-card">
+      <div class="legal-header">
+        <div>
+          <div class="legal-doc-id">ODCS-LEGAL-003 • CRITICAL SYSTEMS</div>
+          <h2 class="legal-doc-title">Security Architecture &amp; Vulnerability Disclosure</h2>
+        </div>
+        <div class="legal-meta-badge" style="border-color:#06b6d4;color:#06b6d4;">COORDINATED DISCLOSURE</div>
+      </div>
+
+      <div class="legal-body">
+        <p>
+          Digital continuity is mission-critical infrastructure. ODCS is designed to protect medical records in ambulances, banking ledgers during partition, and aerospace telemetry. Security and cryptographic integrity are paramount.
+        </p>
+
+        <h3>1. In-Scope Security Components</h3>
+        <ul>
+          <li><strong>Cryptographic Chain Integrity:</strong> SHA-256 state digests, field-level binary Merkle trees, and RFC 8785 JSON canonicalization.</li>
+          <li><strong>CRDT Consensus Robustness:</strong> Resistance to state poisoning, causal frontier violations, and outbox replay thundering herds.</li>
+          <li><strong>Haven C VM &amp; Bytecode Sandbox:</strong> Memory safety in the grammar parser, opcode dispatch engine, and durable record immutability enforcement.</li>
+          <li><strong>Cloudflare Edge Continuity Gateway:</strong> Telemetry probing and sync endpoint verification.</li>
+        </ul>
+
+        <h3>2. Coordinated Disclosure SLA</h3>
+        <p>
+          We commit to the following response timeline for responsible security researchers:
+        </p>
+        <ul>
+          <li><strong>Initial Acknowledgement:</strong> Within <strong>24 hours</strong> of submission.</li>
+          <li><strong>Triage &amp; Severity Assessment:</strong> Within <strong>72 hours</strong>.</li>
+          <li><strong>Remediation Target:</strong> Critical vulnerabilities patched within <strong>14 days</strong>; public disclosure coordinated following downstream release.</li>
+        </ul>
+
+        <h3>3. Safe Harbor Guarantee</h3>
+        <p>
+          If you conduct vulnerability research in good faith and adhere to these guidelines, we will consider your research authorized, will not pursue civil litigation, and will not report your activities to law enforcement.
+        </p>
+        <div class="legal-callout success">
+          <strong>Security Contact:</strong> Please send encrypted reports to <a href="mailto:security@odcs.in" style="color:var(--cyan-primary);">security@odcs.in</a>. Include proof-of-concept steps and environmental details.
+        </div>
+      </div>
+    </article>
+
+
+    <!-- ====================================================================
+         4. STANDARDS GOVERNANCE & ROYALTY-FREE IP POLICY
+         ==================================================================== -->
+    <article id="governance" class="legal-card">
+      <div class="legal-header">
+        <div>
+          <div class="legal-doc-id">ODCS-LEGAL-004 • GOVERNANCE CHARTER</div>
+          <h2 class="legal-doc-title">Standards Governance &amp; Royalty-Free IP Policy</h2>
+        </div>
+        <div class="legal-meta-badge">ROYALTY-FREE COMMITMENT</div>
+      </div>
+
+      <div class="legal-body">
+        <h3>1. The Architecture Committee</h3>
+        <p>
+          The Open Digital Continuity Standard is stewarded by the <strong>Open Digital Continuity Architecture Committee</strong>, chaired by Lead Architect <strong>Anirudha Puthraya</strong>. The Committee coordinates working drafts, schema consensus, RFC reviews, and language interoperability.
+        </p>
+
+        <h3>2. Specification Maturity Lifecycle</h3>
+        <ol>
+          <li><strong>Working Draft (WD):</strong> Exploratory architectural proposals detailing invariants and candidate interfaces.</li>
+          <li><strong>Committee Draft / Request for Comments (RFC):</strong> Formally reviewed specifications published on <code>odcs.in/spec/</code> for public review.</li>
+          <li><strong>Candidate Recommendation (CR):</strong> Verified across at least two independent production implementations (e.g. Haven C-VM and browser reference clients).</li>
+          <li><strong>Canonical Standard (ODCS):</strong> Ratified, permanent reference standard. Backward-incompatible modifications require a major version bump.</li>
+        </ol>
+
+        <h3>3. Royalty-Free (FRAND-RF) Patent Commitment</h3>
+        <p>
+          To safeguard implementors against patent holdup and submarine litigation, all contributors to the ODCS specification irrevocably grant to any implementor a non-exclusive, worldwide, royalty-free license to practice any patent claims essential to implementing the standard.
+        </p>
+      </div>
+    </article>
+
+
+    <!-- ====================================================================
+         5. TRADEMARK & BRAND IDENTITY GUIDELINES
+         ==================================================================== -->
+    <article id="brand" class="legal-card">
+      <div class="legal-header">
+        <div>
+          <div class="legal-doc-id">ODCS-LEGAL-005 • IDENTITY SPEC</div>
+          <h2 class="legal-doc-title">Trademark, Brand Identity &amp; Certification Marks</h2>
+        </div>
+        <div class="legal-meta-badge">CONFORMANCE MARKS</div>
+      </div>
+
+      <div class="legal-body">
+        <p>
+          The names <em>"Open Digital Continuity Standard"</em>, <em>"ODCS"</em>, <em>"Haven Language"</em>, and <em>"Heaven Language"</em> represent verified digital continuity and cryptographic durability. These guidelines govern appropriate usage.
+        </p>
+
+        <h3>1. Permitted Uses</h3>
+        <ul>
+          <li><strong>Descriptive Referencing:</strong> You may freely state that your software <em>"implements the Open Digital Continuity Standard (ODCS-1.0.0)"</em> or is <em>"written in Haven Language"</em>.</li>
+          <li><strong>Educational &amp; Research:</strong> Academic papers, textbooks, benchmark studies, and conference talks may display official logos and diagrams freely.</li>
+        </ul>
+
+        <h3>2. Certification &amp; Conformance Marks</h3>
+        <p>
+          Products that successfully validate against the Haven test suite (including the 8 standard verification suites) may display the official conformance badges:
+        </p>
+        <div style="display:flex; gap:16px; flex-wrap:wrap; margin:20px 0;">
+          <div style="background:rgba(6,182,212,0.1); border:1px solid var(--cyan-primary); padding:10px 18px; border-radius:8px; font-size:0.85rem; font-weight:700; color:var(--cyan-primary);">
+            ✓ ODCS-1.0.0 CERTIFIED
+          </div>
+          <div style="background:rgba(16,185,129,0.1); border:1px solid #10b981; padding:10px 18px; border-radius:8px; font-size:0.85rem; font-weight:700; color:#10b981;">
+            ✓ ZERO INTENT LOSS (ZIL) COMPLIANT
+          </div>
+          <div style="background:rgba(168,85,247,0.1); border:1px solid #a855f7; padding:10px 18px; border-radius:8px; font-size:0.85rem; font-weight:700; color:#c084fc;">
+            ✓ HAVEN NATIVE RUNTIME 1.0.0
+          </div>
+        </div>
+
+        <h3>3. Official Color Palette &amp; Design Tokens</h3>
+        <div class="color-swatch-grid">
+          <div class="color-swatch-card">
+            <div class="color-box" style="background: #00f0ff;"></div>
+            <strong>Cyan Primary</strong><br>
+            <code>#00f0ff</code> / <code>#06b6d4</code><br>
+            <span style="color:var(--text-dim);">Core Standard</span>
+          </div>
+          <div class="color-swatch-card">
+            <div class="color-box" style="background: #10b981;"></div>
+            <strong>Continuity Emerald</strong><br>
+            <code>#10b981</code><br>
+            <span style="color:var(--text-dim);">L1 WAL &amp; Sync State</span>
+          </div>
+          <div class="color-swatch-card">
+            <div class="color-box" style="background: #f59e0b;"></div>
+            <strong>Alert Amber</strong><br>
+            <code>#f59e0b</code><br>
+            <span style="color:var(--text-dim);">Airgap Buffer Status</span>
+          </div>
+          <div class="color-swatch-card">
+            <div class="color-box" style="background: #c084fc;"></div>
+            <strong>Satellite Violet</strong><br>
+            <code>#c084fc</code><br>
+            <span style="color:var(--text-dim);">Haven Compiler Core</span>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Institutional Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <div class="footer-brand-title">ODCS Initiative</div>
+          <p class="footer-brand-desc">
+            Open Digital Continuity Standard is a global open technology standard establishing deterministic software continuity across network disruptions, outages, and offline environments.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Specifications</div>
+          <ul class="footer-links-list">
+            <li><a href="docs.html#odc-model" class="footer-link">ODC Master Model</a></li>
+            <li><a href="docs.html#layer-1" class="footer-link">Layer 1: Local Durability</a></li>
+            <li><a href="docs.html#layer-2" class="footer-link">Layer 2: Transport &amp; Sync</a></li>
+            <li><a href="docs.html#layer-3" class="footer-link">Layer 3: Runtime Adaptation</a></li>
+            <li><a href="docs.html#layer-4" class="footer-link">Layer 4: Application UX</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Legal &amp; Policy</div>
+          <ul class="footer-links-list">
+            <li><a href="legal.html#privacy" class="footer-link">Privacy &amp; Data Sovereignty</a></li>
+            <li><a href="legal.html#terms" class="footer-link">Terms &amp; Standards License</a></li>
+            <li><a href="legal.html#security" class="footer-link">Vulnerability Disclosure (VDP)</a></li>
+            <li><a href="legal.html#governance" class="footer-link">Standards Governance</a></li>
+            <li><a href="legal.html#brand" class="footer-link">Brand &amp; Trademark Marks</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Haven Language</div>
+          <ul class="footer-links-list">
+            <li><a href="https://api.odcs.in/docs" target="_blank" rel="noopener noreferrer" class="footer-link">Edge API Gateway (api.odcs.in) ↗</a></li>
+            <li><a href="https://api.odcs.in/openapi.json" target="_blank" rel="noopener noreferrer" class="footer-link">OpenAPI 3.1 Spec ↗</a></li>
+            <li><a href="heaven/" class="footer-link">Haven Language Portal</a></li>
+            <li><a href="heaven/#downloads" class="footer-link">Download Compilers (20 OS)</a></li>
+            <li><a href="heaven/#playground" class="footer-link">Web Code Playground</a></li>
+            <li><a href="admin/" class="footer-link">Admin Publications</a></li>
+            <li><a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub Repository</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Open Digital Continuity Standard Working Group &amp; Haven Language Foundation. Lead Architect: Anirudha Puthraya. Licensed under Apache 2.0.
+        </div>
+        <div>
+          Domain: <strong style="color: var(--cyan-primary);">odcs.in</strong> • Official Legal &amp; Governance Center
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
+

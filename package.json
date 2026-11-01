@@ -1,0 +1,34 @@
+{
+  "name": "odcs-cloudflare-edge",
+  "version": "1.0.0",
+  "description": "Cloudflare Edge Continuity Worker for the Open Digital Continuity Standard (ODCS) and Haven Language.",
+  "author": "Anirudha Puthraya",
+  "license": "Apache-2.0",
+  "homepage": "https://odcs.in",
+  "main": "_worker.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "dev:pages": "wrangler pages dev .",
+    "dev:api": "wrangler dev -c wrangler.api.toml",
+    "deploy": "wrangler deploy",
+    "deploy:pages": "wrangler pages deploy . --project-name=odcs",
+    "deploy:api": "wrangler deploy -c wrangler.api.toml",
+    "tail": "wrangler tail",
+    "tail:api": "wrangler tail -c wrangler.api.toml",
+    "test": "node test-worker.js"
+  },
+  "devDependencies": {
+    "wrangler": "^3.100.0"
+  },
+  "keywords": [
+    "odcs",
+    "haven-language",
+    "cloudflare-workers",
+    "crdt",
+    "vector-clocks",
+    "digital-continuity",
+    "edge-computing",
+    "zero-intent-loss"
+  ]
+}
+

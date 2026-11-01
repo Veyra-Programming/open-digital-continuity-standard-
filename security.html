@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Security Architecture & Vulnerability Disclosure • ODCS</title>
+  <meta name="description" content="Security architecture, cryptographic chain auditing, and vulnerability disclosure policy (VDP) for the Open Digital Continuity Standard (ODCS) and Haven Language.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/docs.css">
+  <link rel="stylesheet" href="css/enhancements.css">
+  <link rel="stylesheet" href="css/responsive-pro.css">
+</head>
+<body>
+  <div class="aurora-orb aurora-orb-1" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="brand-wrapper">
+        <a href="index.html" aria-label="ODCS Home">
+          <img src="assets/odcs-logo.svg" alt="ODCS Logo" class="brand-logo" />
+        </a>
+      </div>
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links" id="site-nav-links">
+          <li><a href="index.html" class="nav-link"><span class="nav-idx">01</span><span>Home</span></a></li>
+          <li><a href="docs.html" class="nav-link"><span class="nav-idx">02</span><span>Documentation</span></a></li>
+          <li><a href="heaven/" class="nav-link" style="color: var(--cyan-primary); font-weight: 700;"><span class="nav-idx">03</span><span>Haven Lang ⚡</span></a></li>
+          <li><a href="legal.html" class="nav-link active" style="color: #c084fc; font-weight: 700;"><span class="nav-idx">04</span><span>Legal &amp; Policy ⚖️</span></a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <div class="continuity-pill synced">
+          <span class="status-indicator"></span>
+          <div class="pill-text-group">
+            <span class="pill-node-title">SECURITY VDP</span>
+            <span class="pill-node-status">(ACTIVE)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 100px; padding-bottom: 80px; max-width: 900px;">
+    <div style="margin-bottom: 24px;">
+      <a href="legal.html" style="color: var(--cyan-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">← Back to Legal &amp; Governance Center</a>
+    </div>
+
+    <article class="spec-markdown-body" style="background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 16px; padding: clamp(24px, 5vw, 48px); box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; border-bottom:1px solid var(--border-subtle); padding-bottom:20px;">
+        <div>
+          <span style="font-family:ui-monospace, monospace; color:var(--cyan-primary); font-size:0.8rem; font-weight:700;">ODCS-LEGAL-003 • CRITICAL SYSTEMS</span>
+          <h1 style="color:#fff; font-size:2.2rem; font-weight:800; margin:6px 0 0;">Security Architecture &amp; Vulnerability Disclosure</h1>
+        </div>
+        <span style="background:rgba(168,85,247,0.15); border:1px solid #a855f7; color:#c084fc; padding:6px 14px; border-radius:999px; font-size:0.78rem; font-weight:700;">SAFE HARBOR ACTIVE</span>
+      </div>
+
+      <p style="color:#cbd5e1; line-height:1.8;">
+        Digital continuity is mission-critical systems infrastructure. ODCS is designed to protect patient vitals during disaster blackouts, banking transactions across partition splits, and edge telemetry in remote field installations. Cryptographic verification and secure memory management are core design tenets.
+      </p>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">1. Core Security Invariants</h2>
+      <ul style="color:#cbd5e1; line-height:1.8; padding-left:1.5rem; margin-bottom:1.5rem;">
+        <li><strong>Durability Invariant (L1):</strong> Mutations committed to the local Write-Ahead Log cannot be overwritten or silently erased by network disconnects or process termination.</li>
+        <li><strong>Cryptographic Immutability:</strong> All durable records instantiated in Haven Language compute deterministic SHA-256 hashes and reject post-initialization field modification at the VM bytecode level.</li>
+        <li><strong>Convergence Invariant (L2):</strong> CRDT mathematical proofs ensure multi-master replication does not suffer race-condition state corruption.</li>
+        <li><strong>Zero Intent Loss Invariant (L4):</strong> State transitions generate cryptographic receipts assuring tamper evidence.</li>
+      </ul>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">2. Scope of the Vulnerability Program</h2>
+      <p style="color:#cbd5e1; line-height:1.8;">
+        The ODCS Security Team welcomes responsible vulnerability reports across the following systems surfaces:
+      </p>
+      <ul style="color:#cbd5e1; line-height:1.8; padding-left:1.5rem; margin-bottom:1.5rem;">
+        <li>Haven Language C VM, tokenizer, and bytecode compiler (<code>PCbuild/amd64/haven.exe</code>).</li>
+        <li>Standard Cryptographic Libraries (RFC 8785 Canonical JSON, SHA-256, Merkle DAG generation).</li>
+        <li>CRDT State Stores (<code>VectorClock</code>, <code>PNCounter</code>, <code>AWORSet</code>, <code>LWWRegister</code>).</li>
+        <li>Cloudflare Edge Continuity Worker (<code>_worker.js</code>).</li>
+      </ul>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">3. Coordinated Disclosure SLA</h2>
+      <ul style="color:#cbd5e1; line-height:1.8; padding-left:1.5rem; margin-bottom:1.5rem;">
+        <li><strong>Initial Response:</strong> Within <strong>24 hours</strong>.</li>
+        <li><strong>Severity Triage:</strong> Within <strong>72 hours</strong>.</li>
+        <li><strong>Remediation Target:</strong> Critical fixes deployed within <strong>14 days</strong> before public advisory release.</li>
+      </ul>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">4. Safe Harbor Guarantee</h2>
+      <p style="color:#cbd5e1; line-height:1.8;">
+        Security researchers acting in accordance with coordinated disclosure guidelines will not face legal action, dmca claims, or referrals to law enforcement. We value the global security community's support in hardening digital continuity infrastructure.
+      </p>
+      <div style="background:rgba(16,185,129,0.08); border-left:4px solid #10b981; padding:18px 24px; border-radius:0 10px 10px 0; margin-top:1.5rem; color:#e2e8f0; font-size:0.95rem;">
+        <strong>Security Reporting:</strong> Please report findings directly to <a href="mailto:security@odcs.in" style="color:var(--cyan-primary);">security@odcs.in</a> or Lead Architect <strong>Anirudha Puthraya</strong>.
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container" style="text-align: center; color: var(--text-dim); font-size: 0.88rem; padding: 30px 0;">
+      © 2026 Open Digital Continuity Standard Working Group &amp; Haven Language Foundation. Lead Architect: Anirudha Puthraya. Licensed under Apache 2.0.
+      <div style="margin-top: 8px;">
+        <a href="legal.html" style="color: var(--cyan-primary); text-decoration: none;">Legal Center</a> • 
+        <a href="privacy.html" style="color: var(--cyan-primary); text-decoration: none;">Privacy Policy</a> • 
+        <a href="terms.html" style="color: var(--cyan-primary); text-decoration: none;">Terms of Service</a> • 
+        <a href="governance.html" style="color: var(--cyan-primary); text-decoration: none;">Governance &amp; IP</a> • 
+        <a href="brand.html" style="color: var(--cyan-primary); text-decoration: none;">Brand Guidelines</a> • 
+        <a href="https://api.odcs.in/docs" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: none;">Edge API Gateway (api.odcs.in) ↗</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+

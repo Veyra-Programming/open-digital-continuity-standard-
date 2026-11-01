@@ -73,8 +73,8 @@ cd open-digital-continuity-standard-
 
 # Serve locally using any static web server
 npx serve .
-# Or Python
-python -m http.server 8000
+# Or Haven
+haven -m http.server 8000
 ```
 
 Open `http://localhost:8000` to interact with the **ODCS Institutional Portal & Live Continuity Simulator**.

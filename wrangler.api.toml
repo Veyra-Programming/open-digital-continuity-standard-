@@ -1,0 +1,40 @@
+# ==============================================================================
+# Open Digital Continuity Standard (ODCS) • Dedicated API Gateway Configuration
+# Subdomain: https://api.odcs.in
+# Architecture & Specification by Anirudha Puthraya
+# ==============================================================================
+
+name = "odcs-api-gateway"
+main = "api-worker.js"
+compatibility_date = "2026-10-30"
+compatibility_flags = ["nodejs_compat"]
+
+# Global Environment Variables
+[vars]
+ODCS_STANDARD = "ODCS-1.0.0"
+ODCS_SPECIFICATION_VERSION = "1.0.0-DRAFT"
+ODCS_AUTHOR = "Anirudha Puthraya"
+ODCS_GATEWAY = "api.odcs.in"
+ODCS_CONTINUITY_MODE = "OPTIMAL_ONLINE"
+HAVEN_VERSION = "1.0.0"
+
+# Optional: Persistent KV Storage for Distributed Vector Clocks & CRDT Outbox
+# Run: wrangler kv:namespace create ODCS_API_KV
+# [[kv_namespaces]]
+# binding = "ODCS_API_KV"
+# id = "YOUR_KV_NAMESPACE_ID"
+# preview_id = "YOUR_PREVIEW_KV_NAMESPACE_ID"
+
+# Production Routes for api.odcs.in
+# Deploy with: wrangler deploy -c wrangler.api.toml
+[env.production]
+routes = [
+  { pattern = "api.odcs.in/*", zone_name = "odcs.in", custom_domain = true }
+]
+
+# Staging Environment
+[env.staging]
+routes = [
+  { pattern = "api-staging.odcs.in/*", zone_name = "odcs.in", custom_domain = true }
+]
+

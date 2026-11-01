@@ -3,11 +3,17 @@
  * Implements Layer 1 & 3 offline resilience for the ODCS institutional platform.
  */
 
-const CACHE_NAME = 'odcs-portal-v1.1.0';
+const CACHE_NAME = 'odcs-portal-v1.2.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './docs.html',
+  './legal.html',
+  './privacy.html',
+  './terms.html',
+  './security.html',
+  './governance.html',
+  './brand.html',
   './manifest.json',
   './assets/odcs-logo.svg',
   './assets/odcs-symbol.svg',
@@ -54,6 +60,12 @@ self.addEventListener('activate', (event) => {
 
 // Cache-first falling back to network strategy for offline continuity
 self.addEventListener('fetch', (event) => {
+  // Bypass cache for live ODCS Edge API & Telemetry endpoints
+  if (event.request.url.includes('/api/') || event.request.url.includes('/odcs/')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {

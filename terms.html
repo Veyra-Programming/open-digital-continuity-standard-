@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Terms of Service & Standards Participation • ODCS</title>
+  <meta name="description" content="Official Terms of Service, Standards Participation Agreement, and Specification License for the Open Digital Continuity Standard (ODCS) and Haven Language.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/docs.css">
+  <link rel="stylesheet" href="css/enhancements.css">
+  <link rel="stylesheet" href="css/responsive-pro.css">
+</head>
+<body>
+  <div class="aurora-orb aurora-orb-1" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="brand-wrapper">
+        <a href="index.html" aria-label="ODCS Home">
+          <img src="assets/odcs-logo.svg" alt="ODCS Logo" class="brand-logo" />
+        </a>
+      </div>
+      <nav aria-label="Primary Navigation">
+        <ul class="nav-links" id="site-nav-links">
+          <li><a href="index.html" class="nav-link"><span class="nav-idx">01</span><span>Home</span></a></li>
+          <li><a href="docs.html" class="nav-link"><span class="nav-idx">02</span><span>Documentation</span></a></li>
+          <li><a href="heaven/" class="nav-link" style="color: var(--cyan-primary); font-weight: 700;"><span class="nav-idx">03</span><span>Haven Lang ⚡</span></a></li>
+          <li><a href="legal.html" class="nav-link active" style="color: #c084fc; font-weight: 700;"><span class="nav-idx">04</span><span>Legal &amp; Policy ⚖️</span></a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <div class="continuity-pill synced">
+          <span class="status-indicator"></span>
+          <div class="pill-text-group">
+            <span class="pill-node-title">APACHE 2.0</span>
+            <span class="pill-node-status">(PERMISSIVE)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 100px; padding-bottom: 80px; max-width: 900px;">
+    <div style="margin-bottom: 24px;">
+      <a href="legal.html" style="color: var(--cyan-primary); text-decoration: none; font-size: 0.9rem; font-weight: 600;">← Back to Legal &amp; Governance Center</a>
+    </div>
+
+    <article class="spec-markdown-body" style="background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 16px; padding: clamp(24px, 5vw, 48px); box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:24px; border-bottom:1px solid var(--border-subtle); padding-bottom:20px;">
+        <div>
+          <span style="font-family:ui-monospace, monospace; color:var(--cyan-primary); font-size:0.8rem; font-weight:700;">ODCS-LEGAL-002 • STANDARD TRACK</span>
+          <h1 style="color:#fff; font-size:2.2rem; font-weight:800; margin:6px 0 0;">Terms of Service &amp; Standards Participation</h1>
+        </div>
+        <span style="background:rgba(6,182,212,0.15); border:1px solid var(--cyan-primary); color:var(--cyan-primary); padding:6px 14px; border-radius:999px; font-size:0.78rem; font-weight:700;">OPEN SPECIFICATION</span>
+      </div>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:1.5rem;">1. Standards Specification Grant (Royalty-Free)</h2>
+      <p style="color:#cbd5e1; line-height:1.8;">
+        The core documents comprising the Open Digital Continuity Standard (ODCS-SPEC-001 through ODCS-SPEC-005) are published as open technical specifications. You are granted an irrevocable, worldwide, royalty-free license under the <strong>Apache License 2.0</strong> to read, reference, implement, and distribute conforming software and hardware implementations without licensing fees.
+      </p>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">2. Haven Programming Language Compiler &amp; Toolchain License</h2>
+      <p style="color:#cbd5e1; line-height:1.8;">
+        The Haven compiler binaries (<code>haven.exe</code>), standard libraries (<code>Lib/haven</code>, <code>Lib/odcs</code>), and CLI toolchain are open source software. Redistribution and use in source and binary forms, with or without modification, are permitted provided that copyright notices and disclaimers are preserved in accordance with the Haven Language Foundation License and Apache 2.0.
+      </p>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">3. Conformance &amp; Non-Fragmentation Commitment</h2>
+      <p style="color:#cbd5e1; line-height:1.8;">
+        To maintain interoperability across distributed ledgers, CRDT synchronization pipelines, and emergency systems:
+      </p>
+      <ul style="color:#cbd5e1; line-height:1.8; padding-left:1.5rem; margin-bottom:1.5rem;">
+        <li>You may freely build custom implementations of the 4-layer model.</li>
+        <li>You shall not claim official <em>"ODCS-1.0.0 Conformance"</em> for systems that intentionally violate the core invariants: Local Durability WAL (L1), CRDT SEC Convergence (L2), Autonomic Adaptation (L3), or Zero Intent Loss (L4).</li>
+      </ul>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">4. Disclaimer of Warranty &amp; Limitation of Liability</h2>
+      <div style="background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:18px 24px; border-radius:0 10px 10px 0; margin-bottom:1.5rem; color:#e2e8f0; font-size:0.92rem; line-height:1.7;">
+        <strong>LEGAL DISCLAIMER:</strong> THE ODCS SPECIFICATIONS AND HAVEN SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL ANIRUDHA PUTHRAYA, THE OPEN DIGITAL CONTINUITY STANDARD WORKING GROUP, OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THE SPECIFICATIONS OR RUNTIME.
+      </div>
+
+      <h2 style="color:#fff; font-size:1.4rem; margin-top:2rem;">5. Cryptographic Proof Reliance</h2>
+      <p style="color:#cbd5e1; line-height:1.8;">
+        ODCS enforces deterministic integrity via SHA-256 and field-level binary Merkle DAGs. Parties relying on cryptographic proofs acknowledge that proof validity is mathematically self-contained and verifiable through deterministic replay of canonical mutation journals.
+      </p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container" style="text-align: center; color: var(--text-dim); font-size: 0.88rem; padding: 30px 0;">
+      © 2026 Open Digital Continuity Standard Working Group &amp; Haven Language Foundation. Lead Architect: Anirudha Puthraya. Licensed under Apache 2.0.
+      <div style="margin-top: 8px;">
+        <a href="legal.html" style="color: var(--cyan-primary); text-decoration: none;">Legal Center</a> • 
+        <a href="privacy.html" style="color: var(--cyan-primary); text-decoration: none;">Privacy Policy</a> • 
+        <a href="security.html" style="color: var(--cyan-primary); text-decoration: none;">Security (VDP)</a> • 
+        <a href="governance.html" style="color: var(--cyan-primary); text-decoration: none;">Governance &amp; IP</a> • 
+        <a href="brand.html" style="color: var(--cyan-primary); text-decoration: none;">Brand Guidelines</a> • 
+        <a href="https://api.odcs.in/docs" target="_blank" rel="noopener noreferrer" style="color: #10b981; text-decoration: none;">Edge API Gateway (api.odcs.in) ↗</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+

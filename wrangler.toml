@@ -1,0 +1,40 @@
+# ==============================================================================
+# Open Digital Continuity Standard (ODCS) • Cloudflare Configuration
+# Standard Specification & Architecture by Anirudha Puthraya
+# ==============================================================================
+
+name = "odcs-continuity-edge"
+main = "_worker.js"
+compatibility_date = "2026-10-30"
+compatibility_flags = ["nodejs_compat"]
+
+# Static Assets Bucket / Pages directory
+[assets]
+directory = "."
+binding = "ASSETS"
+html_handling = "auto-trailing-slash"
+not_found_handling = "single-page-application"
+
+# Global Environment Variables
+[vars]
+ODCS_STANDARD = "ODCS-1.0.0"
+ODCS_SPECIFICATION_VERSION = "1.0.0-DRAFT"
+ODCS_AUTHOR = "Anirudha Puthraya"
+ODCS_CONTINUITY_MODE = "OPTIMAL_ONLINE"
+HAVEN_VERSION = "1.0.0"
+
+# Optional: Persistent KV Storage for Distributed Vector Clocks & CRDT Outbox
+# Run: wrangler kv:namespace create ODCS_STORAGE_KV
+# [[kv_namespaces]]
+# binding = "ODCS_KV"
+# id = "YOUR_KV_NAMESPACE_ID"
+# preview_id = "YOUR_PREVIEW_KV_NAMESPACE_ID"
+
+# Production Routes on odcs.in (Cloudflare Pages Custom Domains or Workers)
+# [env.production]
+# routes = [
+#   { pattern = "odcs.in/*", zone_name = "odcs.in" },
+#   { pattern = "www.odcs.in/*", zone_name = "odcs.in" },
+#   { pattern = "api.odcs.in/*", zone_name = "odcs.in" }
+# ]
+

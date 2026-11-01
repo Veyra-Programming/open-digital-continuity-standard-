@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ODCS — Open Digital Continuity Standard | Global Resilience Beyond the Network</title>
   
   <!-- SEO & Social Meta Tags -->
@@ -23,12 +23,19 @@
 
   <!-- Master Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/enhancements.css">
+  <link rel="stylesheet" href="css/responsive-pro.css">
 </head>
 <body>
 
   <!-- Ambient Glowing Aurora Orbs -->
-  <div class="aurora-orb aurora-orb-1"></div>
-  <div class="aurora-orb aurora-orb-2"></div>
+  <div class="aurora-orb aurora-orb-1" aria-hidden="true"></div>
+  <div class="aurora-orb aurora-orb-2" aria-hidden="true"></div>
+  <div class="aurora-orb-3" aria-hidden="true"></div>
+  <div class="aurora-orb-4" aria-hidden="true"></div>
+
+  <!-- Mobile Navigation Backdrop Overlay -->
+  <div id="mobile-menu-backdrop" class="mobile-menu-backdrop" aria-hidden="true"></div>
 
   <!-- Top Autonomous Offline Alert Banner (Toggled by Master Switch) -->
   <div id="autonomous-offline-banner" class="autonomous-offline-banner">
@@ -48,10 +55,35 @@
 
       <nav aria-label="Primary Navigation">
         <ul class="nav-links" id="site-nav-links">
-          <li><a href="#four-layer-model" class="nav-link">4-Layer Model</a></li>
-          <li><a href="#simulator" class="nav-link">Live Simulator</a></li>
-          <li><a href="#specifications" class="nav-link">Specifications</a></li>
-          <li><a href="docs.html" class="nav-link">Documentation</a></li>
+          <li class="mobile-drawer-header">
+            <span class="drawer-title">ODCS NAVIGATION</span>
+            <span class="drawer-version">v1.0.0</span>
+          </li>
+          <li><a href="#pain-video" class="nav-link" style="color: #f87171; font-weight: 700;"><span class="nav-idx">01</span><span>Pain vs ODCS 🎬</span></a></li>
+          <li><a href="#four-layer-model" class="nav-link"><span class="nav-idx">02</span><span>4-Layer Model</span></a></li>
+          <li><a href="#simulator" class="nav-link"><span class="nav-idx">03</span><span>Live Simulator</span></a></li>
+          <li><a href="#conformance" class="nav-link"><span class="nav-idx">04</span><span>Conformance Calc</span></a></li>
+          <li><a href="#specifications" class="nav-link"><span class="nav-idx">05</span><span>Specifications</span></a></li>
+          <li><a href="docs.html" class="nav-link"><span class="nav-idx">06</span><span>Documentation</span></a></li>
+          <li><a href="heaven/" class="nav-link" style="color: var(--cyan-primary); font-weight: 700;"><span class="nav-idx">07</span><span>Heaven Lang ⚡</span></a></li>
+          <li><a href="admin/" class="nav-link" style="color: #c084fc; font-weight: 700;"><span class="nav-idx">08</span><span>Admin 🔒</span></a></li>
+          <li class="mobile-drawer-actions">
+            <a href="heaven/" class="mobile-drawer-btn" style="background: linear-gradient(135deg, #a855f7, #00f0ff); color: #060814; font-weight: 700; text-align: center; margin-bottom: 0.5rem; text-decoration: none; padding: 0.75rem 1rem; border-radius: 8px; display: block;">
+              ⚡ Haven Language (.EXE)
+            </a>
+            <a href="admin/" class="mobile-drawer-admin-btn" style="background: rgba(0,240,255,0.1); border: 1px solid rgba(0,240,255,0.3); color: var(--cyan-primary); font-weight: 600; text-align: center; margin-bottom: 0.5rem; text-decoration: none; padding: 0.65rem 1rem; border-radius: 8px; display: block;">
+              🔒 Admin Upload Panel
+            </a>
+            <button type="button" id="mobile-drawer-offline-btn" class="mobile-drawer-offline-btn">
+              ⚡ Test Offline Mode
+            </button>
+            <a href="https://github.com/Veyra-Programming/open-digital-continuity-standard-" target="_blank" rel="noopener noreferrer" class="mobile-drawer-gh-link">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+              </svg>
+              <span>GitHub Repository (Apache 2.0)</span>
+            </a>
+          </li>
         </ul>
       </nav>
 
@@ -112,7 +144,12 @@
           <span class="github-repo-badge">Repo</span>
         </a>
 
-        <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle navigation menu">☰</button>
+        <!-- Animated 3-Bar Mobile Hamburger Button -->
+        <button id="mobile-menu-toggle" class="mobile-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
       </div>
     </div>
   </header>
@@ -188,11 +225,26 @@
               </div>
             </div>
 
+            <!-- Mobile Segmented View Mode Tabs (Visible on mobile/tablet) -->
+            <div class="globe-mobile-view-tabs" id="globe-mobile-view-tabs">
+              <button type="button" class="globe-mobile-tab active" data-tab="canvas">
+                <span>🌐 3D Earth Mesh</span>
+              </button>
+              <button type="button" class="globe-mobile-tab" data-tab="sidebar">
+                <span>📡 Country Nodes (20)</span>
+              </button>
+            </div>
+
             <!-- Command Station: 3D Earth Canvas + Country Telemetry Sidebar -->
             <div class="globe-command-station" id="globe-command-station">
               <!-- Left: 3D Earth Interactive Viewport -->
               <div class="globe-canvas-wrapper" id="globe-canvas-wrapper" title="Drag to rotate Earth in 3D • Click any country or node to inspect">
                 <canvas id="global-signals-canvas"></canvas>
+
+                <!-- Mobile Touch Interaction Hint -->
+                <div class="globe-touch-hint" aria-hidden="true">
+                  <span>👆 Drag to rotate</span> • <span>✌️ Pinch to zoom</span>
+                </div>
 
                 <!-- Selected Country Floating Beacon Marker -->
                 <div id="globe-country-beacon" class="globe-country-beacon">
@@ -293,6 +345,211 @@
     </section>
 
     <!-- ========================================================================
+         The Pain of Computing Without ODCS: Interactive Video Simulation & Media Gallery
+         ======================================================================== -->
+    <section class="section-padding pain-video-section" id="pain-video">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label" style="color: #f87171; border-color: rgba(248, 113, 113, 0.3); background: rgba(239, 68, 68, 0.1);">
+            CRITICAL SYSTEMS FRAGILITY
+          </span>
+          <h2 class="section-title">The Pain of Computing Without ODCS</h2>
+          <p class="section-subtitle">
+            Witness how traditional cloud architecture collapses under network partitions, wiping user intent and throwing blocking errors — contrasted side-by-side with ODCS autonomous continuity.
+          </p>
+        </div>
+
+        <!-- Video Simulation Mission Control Card -->
+        <div class="pain-video-card" id="pain-video-container">
+          <!-- Top Bar: Scenario Selector Strip -->
+          <div class="video-scenario-strip">
+            <span class="strip-label">Select Scenario:</span>
+            <button type="button" class="scenario-select-pill active" data-scenario="0">
+              🚇 01. Subway Blackout
+            </button>
+            <button type="button" class="scenario-select-pill" data-scenario="1">
+              🏥 02. Hospital ICU Reboot
+            </button>
+            <button type="button" class="scenario-select-pill" data-scenario="2">
+              ✈️ 03. In-Flight Airgap
+            </button>
+            <button type="button" class="scenario-select-pill" data-scenario="3">
+              🌩️ 04. Cloud Region Outage
+            </button>
+          </div>
+
+          <!-- Video Player Sub-Header with Active Scene Narrative -->
+          <div class="video-narrative-bar">
+            <div>
+              <h3 id="video-scenario-title" class="narrative-title">Scene 01: Subway Tunnel Blackout</h3>
+              <p id="video-scenario-desc" class="narrative-desc">Commuter submitting an urgent 24-field banking transaction as the high-speed train enters an underground dead zone.</p>
+            </div>
+            <div class="video-audio-badge">
+              <span class="live-recording-dot"></span>
+              <span>SIMULATED DUAL VIDEO HUD</span>
+            </div>
+          </div>
+
+          <!-- The Split Screen Video Viewport -->
+          <div class="video-split-viewport">
+            <!-- Left Screen: WITHOUT ODCS (Pain & Failure) -->
+            <div class="video-pane pane-without-odcs">
+              <div class="pane-bg-image" style="background-image: url('assets/media/pain_without_odcs.jpg');"></div>
+              <div class="pane-glitch-overlay"></div>
+              
+              <div class="pane-header-tag tag-failure">
+                <span class="pulse-red-dot"></span>
+                <span>TRADITIONAL CLOUD (WITHOUT ODCS)</span>
+              </div>
+
+              <div class="pane-hud-center">
+                <div class="glitch-alarm-box">
+                  <div class="spinner-of-doom"></div>
+                  <div class="glitch-title">504 GATEWAY TIMEOUT</div>
+                  <div class="glitch-subtitle">CONNECTION SEVERED • RETRY FAILED</div>
+                </div>
+              </div>
+
+              <div class="pane-footer-hud">
+                <div class="hud-status-line">
+                  <span>Status:</span>
+                  <strong id="video-bad-status" style="color: #f87171;">HTTP 504 Gateway Timeout</strong>
+                </div>
+                <div class="hud-log-box" id="video-bad-log">
+                  [00:03] Train enters signal dead zone (0 bars)
+                  [00:06] TCP connection reset by peer (ECONNRESET)
+                  [00:08] Browser triggers hard reload... Form wiped.
+                </div>
+                <div class="hud-metric-pill metric-loss" id="video-bad-loss">
+                  100% Intent Lost
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Screen: WITH ODCS (Autonomous Sovereign Continuity) -->
+            <div class="video-pane pane-with-odcs">
+              <div class="pane-bg-image" style="background-image: url('assets/media/odcs_continuity_mesh.jpg');"></div>
+              <div class="pane-glow-overlay"></div>
+
+              <div class="pane-header-tag tag-success">
+                <span class="pulse-green-dot"></span>
+                <span>ODCS CONTINUITY (SOVEREIGN WAL)</span>
+              </div>
+
+              <div class="pane-hud-center">
+                <div class="odcs-success-badge">
+                  <div class="check-halo">✓</div>
+                  <div class="success-title">ZERO INTENT LOSS</div>
+                  <div class="success-subtitle">100% IMMUTABLE LOCAL DURABILITY</div>
+                </div>
+              </div>
+
+              <div class="pane-footer-hud">
+                <div class="hud-status-line">
+                  <span>Status:</span>
+                  <strong id="video-good-status" style="color: var(--emerald-resilience);">Layer 1 Local WAL Committed (0.8ms)</strong>
+                </div>
+                <div class="hud-log-box" id="video-good-log">
+                  [00:03] Physical network drops to 0 bars
+                  [00:04] Transaction committed to local IndexedDB WAL
+                  [00:08] Signal restored: CRDT outbox auto-flushed!
+                </div>
+                <div class="hud-metric-pill metric-retained" id="video-good-loss">
+                  0% Intent Lost (100% Preserved)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video Playback Transport Controls Bar -->
+          <div class="video-transport-bar">
+            <div class="transport-actions">
+              <button type="button" id="btn-video-prev" class="btn-transport" title="Previous Scenario">⏮️</button>
+              <button type="button" id="btn-video-play" class="btn-transport btn-transport-play" title="Play / Pause Simulation">
+                <span>⏸️</span>
+              </button>
+              <button type="button" id="btn-video-next" class="btn-transport" title="Next Scenario">⏭️</button>
+              <button type="button" id="btn-video-restart" class="btn-transport" title="Restart Scene">🔄</button>
+            </div>
+
+            <!-- Scrubber Timeline -->
+            <div class="transport-scrubber">
+              <div class="scrubber-track">
+                <div id="video-progress-fill" class="scrubber-fill" style="width: 25%;"></div>
+              </div>
+              <div class="scrubber-time">
+                <span id="video-time-current">00:03</span> / <span id="video-time-total">00:10</span>
+              </div>
+            </div>
+
+            <div class="transport-settings">
+              <button type="button" id="btn-video-speed" class="btn-transport btn-speed" title="Toggle Playback Speed">1x</button>
+              <button type="button" id="btn-video-sound" class="btn-transport" title="Toggle Synthesized Audio Alerts">🔊</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Resolution Infographics & Architecture Gallery -->
+        <div class="media-gallery-section">
+          <div class="gallery-head">
+            <h3>Visual Evidence & Architecture Gallery</h3>
+            <p>Click any high-resolution exhibit to inspect the visual breakdown and system telemetry.</p>
+          </div>
+
+          <div class="media-gallery-grid">
+            <!-- Exhibit 1 -->
+            <div class="gallery-thumb-card" data-full-img="assets/media/pain_without_odcs.jpg" data-caption="The Agony of Partition Loss: Traditional centralized client-server computing suffers catastrophic failure, 504 timeouts, and irreversible form wipes during signal drops.">
+              <div class="thumb-img-wrapper">
+                <img src="assets/media/pain_without_odcs.jpg" alt="Pain of Computing Without ODCS" loading="lazy" />
+                <span class="thumb-badge badge-red">THE PAIN WITHOUT ODCS</span>
+                <div class="thumb-overlay">🔍 Click to Expand High-Res</div>
+              </div>
+              <div class="thumb-meta">
+                <h4>Fragile Client-Server Collapse</h4>
+                <p>504 Gateway Timeouts, disconnected WebSocket loops, and data wiped behind the loading wheel of doom.</p>
+              </div>
+            </div>
+
+            <!-- Exhibit 2 -->
+            <div class="gallery-thumb-card" data-full-img="assets/media/odcs_continuity_mesh.jpg" data-caption="The ODCS Sovereign Continuity Mesh: Autonomous mission control coordinating hospitals, aircraft, high-speed rail, and LEO satellites with 100% intent preservation.">
+              <div class="thumb-img-wrapper">
+                <img src="assets/media/odcs_continuity_mesh.jpg" alt="ODCS Continuity Mesh Architecture" loading="lazy" />
+                <span class="thumb-badge badge-green">WITH ODCS CONTINUITY</span>
+                <div class="thumb-overlay">🔍 Click to Expand High-Res</div>
+              </div>
+              <div class="thumb-meta">
+                <h4>Autonomous Global Continuity Mesh</h4>
+                <p>100% intent retained, zero latency spikes, and deterministic multi-master CRDT synchronization.</p>
+              </div>
+            </div>
+
+            <!-- Exhibit 3 -->
+            <div class="gallery-thumb-card" data-full-img="assets/media/haven_coding_standard.jpg" data-caption="Haven (Heaven Language) Official Coding Standard: Modern dark mode developer studio demonstrating natural English syntax, pipeline pipes (|&gt;), and hardware durable records.">
+              <div class="thumb-img-wrapper">
+                <img src="assets/media/haven_coding_standard.jpg" alt="Haven Language Coding Standard Studio" loading="lazy" />
+                <span class="thumb-badge badge-purple">HAVEN CODING STANDARD</span>
+                <div class="thumb-overlay">🔍 Click to Expand High-Res</div>
+              </div>
+              <div class="thumb-meta">
+                <h4>Haven Sovereign Language Studio</h4>
+                <p>Official grammar specification, native pipelining, and cryptographic Merkle ledgers in action.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox Modal for High-Res Image Inspection -->
+    <div id="media-lightbox-modal" class="media-lightbox-modal" role="dialog" aria-modal="true">
+      <div class="lightbox-content">
+        <button type="button" id="btn-close-lightbox" class="btn-lightbox-close" aria-label="Close Lightbox">✕</button>
+        <img id="lightbox-modal-img" src="" alt="High Resolution Exhibit" />
+        <div id="lightbox-modal-caption" class="lightbox-caption"></div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
          ODCS Decoded: The Architectural Full-Form
          ======================================================================== -->
     <section class="section-padding" id="full-form" style="background: linear-gradient(180deg, rgba(5, 8, 17, 0) 0%, rgba(13, 20, 36, 0.45) 50%, rgba(5, 8, 17, 0) 100%);">
@@ -360,6 +617,26 @@
           <p class="section-subtitle">
             A comprehensive systems stack organizing digital continuity into decoupled, verifiable layers—from persistent cryptographic local storage to continuous human interaction.
           </p>
+        </div>
+
+        <!-- Mobile Layer Switcher Strip (Visible on mobile/tablet) -->
+        <div class="layer-mobile-nav" id="layer-mobile-nav" role="tablist" aria-label="ODC Mobile Layer Selector">
+          <button type="button" class="layer-mobile-tab active" data-layer="layer-4" role="tab" aria-selected="true">
+            <span class="l-pill-badge l4">L4</span>
+            <span class="l-pill-name">Application</span>
+          </button>
+          <button type="button" class="layer-mobile-tab" data-layer="layer-3" role="tab" aria-selected="false">
+            <span class="l-pill-badge l3">L3</span>
+            <span class="l-pill-name">Runtime</span>
+          </button>
+          <button type="button" class="layer-mobile-tab" data-layer="layer-2" role="tab" aria-selected="false">
+            <span class="l-pill-badge l2">L2</span>
+            <span class="l-pill-name">Transport</span>
+          </button>
+          <button type="button" class="layer-mobile-tab" data-layer="layer-1" role="tab" aria-selected="false">
+            <span class="l-pill-badge l1">L1</span>
+            <span class="l-pill-name">Durability</span>
+          </button>
         </div>
 
         <div class="model-explorer-grid">
@@ -449,10 +726,14 @@
             </div>
 
             <div>
-              <div style="font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--cyan-primary); margin-bottom: 8px;">
-                Normative Implementation Pattern
+              <div class="detail-code-header">
+                <span class="detail-code-label">Normative Implementation Pattern</span>
+                <button type="button" id="btn-copy-layer-code" class="btn-copy-code" title="Copy code snippet">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path></svg>
+                  <span id="copy-layer-code-text">Copy Code</span>
+                </button>
               </div>
-              <pre class="detail-code-block"><code>// Layer 4: Non-blocking optimistic mutation
+              <pre class="detail-code-block"><code id="detail-code-content">// Layer 4: Non-blocking optimistic mutation
 async function submitPatientRecord(vitals) {
   // 1. Immediately render optimistic state in DOM (<16ms)
   ui.renderOptimisticRecord({ id: vitals.id, status: 'BUFFERED_LOCAL' });
@@ -546,7 +827,10 @@ async function submitPatientRecord(vitals) {
             <div class="sim-panel">
               <div class="sim-panel-title">
                 <span>Disruption-Tolerant Merkle Stream</span>
-                <span style="font-size: 0.74rem; color: var(--text-dim); text-transform: none;">Event Journal</span>
+                <div class="sim-journal-actions">
+                  <button type="button" id="btn-copy-stream" class="sim-mini-action-btn" title="Copy Event Journal">Copy Log</button>
+                  <button type="button" id="btn-clear-stream" class="sim-mini-action-btn" title="Clear Event Journal">Clear</button>
+                </div>
               </div>
 
               <div id="sim-event-stream" class="sim-event-stream">
@@ -612,6 +896,15 @@ async function submitPatientRecord(vitals) {
 
           <!-- Right: Calculated Result -->
           <div class="conformance-result-card">
+            <div class="conformance-meter-box">
+              <div class="conformance-meter-label">
+                <span>Conformance Score</span>
+                <span id="conformance-score-pct" class="conformance-meter-val">60%</span>
+              </div>
+              <div class="conformance-meter-track">
+                <div id="conformance-meter-bar" class="conformance-meter-fill" style="width: 60%;"></div>
+              </div>
+            </div>
             <div id="calc-tier-badge" class="conformance-tier-badge">Class S</div>
             <div id="calc-tier-name" class="conformance-tier-name">Standard Conformance</div>
             <p id="calc-tier-desc" class="conformance-tier-desc">
@@ -840,6 +1133,19 @@ async function submitPatientRecord(vitals) {
             <li><a href="docs.html#brand-identity" class="footer-link">Official Logo & Brand ID</a></li>
             <li><a href="docs.html#faq" class="footer-link">Technical FAQ</a></li>
             <li><a href="examples/vanilla-odcs-client/" class="footer-link">Reference Client Demo</a></li>
+            <li><a href="https://api.odcs.in/docs" target="_blank" rel="noopener noreferrer" class="footer-link">Edge API Gateway (api.odcs.in) ↗</a></li>
+            <li><a href="https://api.odcs.in/openapi.json" target="_blank" rel="noopener noreferrer" class="footer-link">OpenAPI 3.1 Spec ↗</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Legal &amp; Governance</div>
+          <ul class="footer-links-list">
+            <li><a href="privacy.html" class="footer-link">Privacy &amp; Data Sovereignty</a></li>
+            <li><a href="terms.html" class="footer-link">Terms &amp; Standards License</a></li>
+            <li><a href="security.html" class="footer-link">Vulnerability Disclosure (VDP)</a></li>
+            <li><a href="governance.html" class="footer-link">Standards Governance &amp; IP</a></li>
+            <li><a href="brand.html" class="footer-link">Brand &amp; Conformance Marks</a></li>
           </ul>
         </div>
 
@@ -865,9 +1171,30 @@ async function submitPatientRecord(vitals) {
     </div>
   </footer>
 
+  <!-- Floating Mobile Quick-Action Dock (Sticky Bottom HUD) -->
+  <aside class="mobile-floating-hud" id="mobile-floating-hud" aria-label="Mobile Navigation Quick Actions">
+    <button type="button" id="hud-quick-offline" class="hud-action-pill hud-btn-offline" title="Toggle Offline Simulation Mode">
+      <span class="hud-pill-dot"></span>
+      <span class="hud-pill-text" id="hud-offline-label">Offline Test</span>
+    </button>
+    <a href="#simulator" class="hud-action-pill" title="Jump to Simulator">
+      <span>🧪</span>
+      <span class="hud-pill-text">Simulator</span>
+    </a>
+    <a href="docs.html" class="hud-action-pill" title="Open Documentation">
+      <span>📖</span>
+      <span class="hud-pill-text">Docs</span>
+    </a>
+    <button type="button" id="hud-scroll-top" class="hud-action-pill hud-btn-top" title="Scroll back to top" aria-label="Scroll back to top">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg>
+      <span class="hud-pill-text">Top</span>
+    </button>
+  </aside>
+
   <!-- Scripts -->
   <script src="js/globe.js"></script>
   <script src="js/main.js"></script>
   <script src="js/simulator.js"></script>
+  <script src="js/video-showcase.js"></script>
 </body>
 </html>
