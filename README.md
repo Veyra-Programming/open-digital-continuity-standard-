@@ -13,7 +13,7 @@
 [![Status: Standard Track](https://img.shields.io/badge/Status-Standard_Track-10b981.svg?style=flat-square)](https://odcs.in)
 [![Offline-First](https://img.shields.io/badge/Architecture-Offline--First-orange.svg?style=flat-square)](docs/ARCHITECTURE.md)
 
-[Official Website (odcs.in)](https://odcs.in) • [Website Repository](https://github.com/Veyra-Programming/odcs-website) • [Dual-Engine Repository](https://github.com/Veyra-Programming/star-haven) • [Release Notes](RELEASE_NOTES.md) • [Specification](SPECIFICATION.md) • [Architecture Guide](docs/ARCHITECTURE.md) • [Contributing](CONTRIBUTING.md)
+[Official Website (odcs.in)](https://odcs.in) • [Website Repository](https://github.com/Veyra-Programming/odcs-website) • [Dual-Engine Repository](https://github.com/Veyra-Programming/star-haven) • [Release Notes](RELEASE_NOTES.md) • [Full Star & Haven Reference (235 Modules)](docs/STAR_HAVEN_FULL_REFERENCE.md) • [Specification](SPECIFICATION.md) • [Architecture Guide](docs/ARCHITECTURE.md) • [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -26,6 +26,7 @@ The **Open Digital Continuity Standard (ODCS-2.0.0 GA)** has officially complete
 - **⭐ Star Programming Language (v1.2.0 GA)**: Universal, zero-virtual-DOM declarative UI engine compiling directly to a **4.9 KB WebAssembly core (`app.wasm`)**. Guarantees single-frame 60 FPS reactive updates ($\Delta t \le 16.66\text{ms}$) with zero npm dependencies.
 - **🕊️ Haven (Heaven) Language (v2.0)**: Natural-English grammar continuity engine. Features immutable cryptographic records (`durable record`), append-only Merkle Write-Ahead Logs (WAL), sub-16ms local authority receipts, and conflict-free replicated data types (CRDTs).
 - **🌌 Unified Dual-Engine Repository**: Fully integrated at [github.com/Veyra-Programming/star-haven](https://github.com/Veyra-Programming/star-haven).
+- **📦 Sovereign Package Managers Announced**: Official notice that `star pkg` and `haven pkg` with `star.toml` / `haven.toml` manifests and RFC 8785 lockfiles are entering Phase 2 implementation. Read the [Complete Dual-Engine Specification & 235 Standard Modules Guide](docs/STAR_HAVEN_FULL_REFERENCE.md).
 
 ---
 

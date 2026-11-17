@@ -33,8 +33,11 @@ This milestone transitions digital continuity from a theoretical framework into 
    - Both engines, toolchains, standard libraries, VS Code extensions, and documentation are unified at [Veyra-Programming/star-haven](https://github.com/Veyra-Programming/star-haven).
 4. **📦 20-OS Verified Binary Vault**:
    - Production installer suites compiled and cryptographically signed across 20 operating system distributions (Windows, Linux, macOS, Android, Alpine, FreeBSD, NetBSD, OpenBSD, illumos, and Haiku).
-5. **🏛️ Official Web Portal Re-Architecture**:
-   - High-performance, modern Next.js 14 App Router portal deploying statically at `odcs.in` backed by the WebAssembly core.
+5. **🏛️ Sovereign Web Portal Re-Architecture**:
+   - Ultra-high-performance pure sovereign web portal deployed at [odcs.in](https://odcs.in) (source at [odcs-website](https://github.com/Veyra-Programming/odcs-website)) powered directly by StarVM WebAssembly (`app.wasm`, 4.9 KB) with zero React or Next.js bloat.
+6. **📦 Sovereign Package Managers Announced (`star pkg` & `haven pkg`)**:
+   - Phase 2 package manager roadmap officially established with `star.toml` / `haven.toml` manifests, RFC 8785 deterministic lockfiles, and decentralized hosting at `https://odcshosting.in`.
+   - Comprehensive reference covering all 18 Star standard packages (235 modules) and Haven continuity subsystems published in [`docs/STAR_HAVEN_FULL_REFERENCE.md`](docs/STAR_HAVEN_FULL_REFERENCE.md).
 
 ---
 
