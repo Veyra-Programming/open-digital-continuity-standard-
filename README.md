@@ -7,6 +7,7 @@
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square)](LICENSE)
 [![Specification: ODCS-2.0.0 GA](https://img.shields.io/badge/Specification-ODCS--2.0.0_GA-00f0ff.svg?style=flat-square)](SPECIFICATION.md)
+[![Telegram Community](https://img.shields.io/badge/Telegram-Join_Community-24A1DE.svg?style=flat-square&logo=telegram)](https://t.me/opendigitalcontinuity)
 [![ODC Model & ODA Algorithm](https://img.shields.io/badge/ODC_Model_&_ODA_Algorithm-odc--model--algorithm-00f0ff.svg?style=flat-square)](https://github.com/Veyra-Programming/odc-model-algorithm)
 [![Star Language Repo](https://img.shields.io/badge/Star_Language-star--language-38bdf8.svg?style=flat-square)](https://github.com/Veyra-Programming/star-language)
 [![Haven Language Repo](https://img.shields.io/badge/Haven_Language-haven--Language--ec4899.svg?style=flat-square)](https://github.com/Veyra-Programming/haven-Language-)
@@ -16,7 +17,7 @@
 [![Status: Standard Track](https://img.shields.io/badge/Status-Standard_Track-10b981.svg?style=flat-square)](https://odcs.in)
 [![Offline-First](https://img.shields.io/badge/Architecture-Offline--First-orange.svg?style=flat-square)](docs/ARCHITECTURE.md)
 
-[Official Website (odcs.in)](https://odcs.in) • [ODC Model & ODA Algorithm](https://github.com/Veyra-Programming/odc-model-algorithm) • [Star Language Repo](https://github.com/Veyra-Programming/star-language) • [Haven Language Repo](https://github.com/Veyra-Programming/haven-Language-) • [Dual-Engine Repo](https://github.com/Veyra-Programming/star-haven) • [Website Repo](https://github.com/Veyra-Programming/odcs-website) • [Release Notes](RELEASE_NOTES.md) • [Full Star & Haven Reference](docs/STAR_HAVEN_FULL_REFERENCE.md) • [Specification](SPECIFICATION.md)
+[Official Website (odcs.in)](https://odcs.in) • [Telegram Community](https://t.me/opendigitalcontinuity) • [ODC Model & ODA Algorithm](https://github.com/Veyra-Programming/odc-model-algorithm) • [Star Language Repo](https://github.com/Veyra-Programming/star-language) • [Haven Language Repo](https://github.com/Veyra-Programming/haven-Language-) • [Dual-Engine Repo](https://github.com/Veyra-Programming/star-haven) • [Website Repo](https://github.com/Veyra-Programming/odcs-website) • [Release Notes](RELEASE_NOTES.md) • [Full Star & Haven Reference](docs/STAR_HAVEN_FULL_REFERENCE.md) • [Specification](SPECIFICATION.md)
 
 </div>
 
