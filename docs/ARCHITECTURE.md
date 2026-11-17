@@ -1,122 +1,139 @@
 # ODCS System Architecture & Technical Topology
-## Architecture Reference Model | Version 1.0.0-DRAFT
+## Architecture Reference Model | Version 2.0.0 GA (General Availability)
+**Standard Authority:** ODCS Standards Foundation  
+**Lead Architect:** Anirudha Puthraya  
+**Organization:** [Veyra-Programming](https://github.com/Veyra-Programming)  
+**Dual-Engine Implementation:** [Veyra-Programming/star-haven](https://github.com/Veyra-Programming/star-haven)  
 
 ---
 
-## 1. Architectural Philosophy
+## 1. Architectural Philosophy: The Sovereign Inversion
 
-The Open Digital Continuity Standard (ODCS) inverts the classical client-server paradigm. In orthodox web and mobile applications:
-- The remote cloud server is the single synchronous authority.
-- The client is a thin ephemeral renderer that cannot function when disconnected.
-- Networks are assumed to be reliably transparent.
+The **Open Digital Continuity Standard (ODCS-2.0.0)** fundamentally inverts the traditional client-server paradigm. In orthodox web and mobile applications:
+- The centralized cloud server is the solitary synchronous authority.
+- The client is a fragile ephemeral renderer that crashes or halts when disconnected.
+- Networks are naively assumed to be permanently reliable and low-latency.
 
-In an **ODCS-Compliant Architecture**:
-1. **Edge-First Durability:** Every node (client, mobile device, edge server, vehicle computer, IoT gateway) is an autonomous, self-sufficient computing node.
-2. **Asynchronous by Default:** Mutations are committed locally to durable non-volatile storage first, decoupled from the network transport lifecycle.
-3. **Multi-Topology Federation:** Synchronization operates symmetrically between client-to-cloud, client-to-edge, or peer-to-peer (P2P mesh).
+In an **ODCS-Compliant Sovereign Architecture**:
+1. **Edge-First Local Authority:** Every client, mobile node, edge appliance, or embedded device is an autonomous, self-sufficient computing node.
+2. **Sub-16ms Single-Frame Execution:** User mutations commit to local durable storage within a single 60Hz frame budget ($\Delta t \le 16.66\text{ms}$) with an instant cryptographic receipt.
+3. **Decoupled Asynchronous Transport:** State changes are persisted to append-only Merkle Write-Ahead Logs (WAL) *before* any network dispatch is attempted.
+4. **Autonomous CRDT Convergence:** Partitioned nodes synchronize state algebraically using semi-lattice operations without human merge-conflict interventions.
 
 ---
 
-## 2. End-to-End System Topology
+## 2. End-to-End System Topology (Dual-Engine Stack)
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        ODCS EDGE CLIENT NODE                           │
 │                                                                        │
-│  [ Layer 4: UX & View Layer ] ◄── Direct Reactive Bindings             │
-│        │                               ▲                               │
-│        ▼ Optimistic Mutation           │ Merged View State             │
-│  [ Layer 3: Runtime Adapter ] ─── Policy Guard                         │
-│        │                               │                               │
-│        ▼ Commit Transaction            │ Materialized Snapshot         │
-│  [ Layer 1: Local Durability (WAL + Store) ]                           │
-│        │                                                               │
-│        ▼ Monotonic Outbox Stream                                       │
-│  [ Layer 2: Sync Engine (TAL / CRDTs) ]                                │
+│  [ Layer 4: Star Declarative UI (v1.2.0 GA / app.wasm) ]               │
+│        │  - Single-Frame 60 FPS Reactive Loop (< 16.6ms)               │
+│        │  - Zero Virtual-DOM / Zero NPM Overhead                       │
+│        │  - Minting Sub-16ms Zero Intent Loss (ZIL) Receipts           │
+│        ▼                                                               │
+│  [ Layer 3: Dynamic Runtime & Telemetry Sensing ]                      │
+│        │  - Active/Passive RTT & Jitter Telemetry Probes               │
+│        │  - 4 Operational Modes (Optimal, Constrained, Jitter, Severed)│
+│        │  - Adaptive Jitter Backoff & Flow Regulation                  │
+│        ▼                                                               │
+│  [ Layer 1: Haven Continuity Ledger (v2.0 / Merkle WAL) ]              │
+│        │  - Durable Immutable Records (durable record)                 │
+│        │  - RFC 8785 Canonical JSON Serialization                      │
+│        │  - SHA-256 Merkle DAG Chain Linkage                           │
+│        ▼                                                               │
+│  [ Layer 2: Mesh Consensus & CRDT Transport Engine ]                   │
+│        │  - PN-Counter Replicas & Add-Wins OR-Sets                     │
+│        │  - Vector Clock Ordering (V_merged = V_local ⊔ V_remote)      │
+│        │  - Dual Wire: ODCS-REL (Ordered) + ODCS-DGM (0-RTT Datagram)  │
 └────────┬───────────────────────────────────────────────────────────────┘
          │
-         │ Multi-Transport Channel (HTTPS / WebSocket / WebRTC / BLE Mesh)
+         │ Multi-Transport Wire (HTTPS / WebSocket / WebRTC P2P / BLE Mesh)
          │
 ┌────────▼───────────────────────────────────────────────────────────────┐
-│                    ODCS COORDINATION / UPSTREAM RELAY                  │
+│                    ODCS SOVEREIGN GATEWAY RELAY                        │
+│                     (heaven/odcs_backend.hvn)                          │
 │                                                                        │
-│  - Merkle DAG Ingestion Pipeline                                       │
-│  - Distributed Vector Clock Arbiter                                    │
-│  - Multi-Tenant Conflict-Free State Convergence (CRDT Server)          │
-│  - Delta Broadcast Bus (Kafka / Redis Streams / NATS)                  │
+│  - Merkle DAG Ingestion & Cryptographic Proof Verification             │
+│  - Distributed Vector Clock Reconciliation Arbiter                     │
+│  - Multi-Tenant Conflict-Free State Convergence (CRDT Mesh Server)     │
+│  - Sub-16ms ZIL Receipt Hardware Validation                            │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 3. Data Flow Lifecycle: A Walkthrough
+## 3. Data Flow Lifecycle: A Step-by-Step Walkthrough
 
-Let us trace what occurs when a user initiates a mutation (e.g. updating a patient chart or editing a document) during a total network blackout:
+Trace what occurs when a user triggers an action (e.g. submitting a medical triage assessment or executing a critical ledger transfer) during a total communications blackout:
 
 ```
-[User Action]
+[User Action in Star UI]
      │
      ▼
-1. Layer 4 applies optimistic state transformation to DOM (<16ms).
+1. Layer 4 applies optimistic state transformation in Star UI (<16.6ms).
      │
      ▼
-2. Layer 3 evaluates current environment:
-   Detects: Network Offline (RTT: ∞, Mode: TRANSIENT_OFFLINE).
-   Policy: Prohibits immediate socket dispatch, commands L1 durable spooling.
+2. Layer 4 generates cryptographic Zero Intent Loss (ZIL) receipt:
+   - Canonicalizes mutation via RFC 8785.
+   - Seals SHA-256 hash with monotonic UUIDv7 timestamp.
+   - Emits: zil_receipt_uuid7_verified to local UI buffer.
      │
      ▼
-3. Layer 1 executes atomic transaction:
-   - Appends operation record to local Write-Ahead Log (WAL) with monotonic UUIDv7.
-   - Computes previousHash Merkle link.
-   - Updates local state snapshot store.
-   - Returns confirmation to L4.
+3. Layer 3 evaluates current network telemetry:
+   - Sensing: RTT = ∞, Jitter = 0ms (Mode: SEVERED_OFFLINE).
+   - Policy: Disables upstream socket dispatches; commands Layer 1 local spooling.
      │
      ▼
-4. Layer 4 updates ambient continuity indicator:
-   - Displays: `Saved Locally (1 queued)`.
+4. Layer 1 executes atomic transaction in Haven Continuity Ledger:
+   - Constructs immutable `EmergencyEncounter` durable record.
+   - Appends operation block to local Merkle Write-Ahead Log (WAL).
+   - Links previous block SHA-256 hash: Hash_n = SHA-256(Block_n || Hash_{n-1}).
+   - Local state snapshot is 100% durable on NVMe/IndexedDB.
      │
      ▼
-... 45 minutes of complete physical disconnection elapse ...
+5. Layer 4 updates ambient status indicator:
+   - Ambient Pill: `Buffered Offline (ZIL Protected)`.
      │
      ▼
-5. Device regains network connectivity.
-   - Layer 3 probe detects `OPTIMAL_ONLINE` (RTT: 42ms).
-   - Layer 3 dispatches transition event to Layer 2.
+... Complete physical network blackout lasts for 2 hours ...
      │
      ▼
-6. Layer 2 Sync Engine awakens:
-   - Queries Layer 1 for pending outbox batch.
-   - Transmits batched delta payload with local Vector Clock.
-   - Upstream server verifies Merkle hashes, performs CRDT merge.
-   - Server returns ACK + inbound remote deltas made by other peers.
+6. Network carrier link recovers:
+   - Layer 3 probe detects `OPTIMAL_ONLINE` (RTT: 38ms).
+   - Layer 3 dispatches transition signal to Layer 2 sync engine.
      │
      ▼
-7. Layer 1 marks local outbox records as SYNCED.
-8. Layer 2 merges remote deltas into local snapshot store.
-9. Layer 4 ambient indicator pulses: `Synced`.
+7. Layer 2 Sync Engine awakens:
+   - Pulls pending outbox batch from Layer 1 WAL.
+   - Emits batch over ODCS-REL with local Vector Clock `V_local`.
+   - Upstream Haven gateway validates Merkle root, performs CRDT join.
+   - Gateway returns ACK + remote peer mutations with `V_remote`.
+     │
+     ▼
+8. Layer 1 updates local WAL block status to `SYNCHRONIZED`.
+9. Layer 2 merges inbound CRDT states algebraically with zero conflicts.
+10. Layer 4 ambient indicator pulses: `ONLINE (0.04ms) · 100% Synced`.
 ```
 
 ---
 
-## 4. Multi-Node Conflict Resolution & CRDT Merging
+## 4. Dual-Engine Role Matrix
 
-When multiple disconnected nodes modify the same entity, ODCS employs deterministic convergence structures:
-
-### 4.1 Field-Level Register Conflict Resolution
-For atomic scalar values (numbers, strings, timestamps), ODCS mandates **Last-Write-Wins Registers (LWW-Register)** augmented with **Hybrid Logical Clocks (HLC)**:
-$$HLC = (l, c) \quad \text{where } l = \text{physical time}, c = \text{logical counter}$$
-Ties in physical time are broken deterministically by the lexical order of node identifiers, guaranteeing identical outcomes across all nodes without a central lock manager.
-
-### 4.2 Collection-Level Conflict Resolution
-For list and collection mutations, ODCS implements **Add-Wins Observed-Removed Sets (AW-ORSet)**:
-- Adding element $e$ assigns a globally unique tag $(e, \text{uuid})$.
-- Deleting element $e$ removes all instances of $e$ observed in the local replica at that instant.
-- If peer A adds $e$ concurrently while peer B deletes $e$, the addition tag created by A has not been observed by B's delete, hence the item safely endures—preventing catastrophic data loss.
+| Component | Responsibility in Topology |
+| :--- | :--- |
+| **⭐ Star Language (v1.2.0 GA)** | Direct human interface, single-frame 60 FPS rendering, WASM runtime, optimistic state mutation, hardware event handling. |
+| **🕊️ Haven Language (v2.0)** | Natural-English backend logic, immutable records, Merkle DAG ledger verification, vector clock arithmetic, CRDT mesh synchronization. |
 
 ---
 
-## 5. Security Architecture & Threat Model
+## 5. Creator & Standards Leadership
 
-1. **At-Rest Protection:** Local databases (IndexedDB / SQLite) in multi-user devices must leverage envelope encryption with keys derived from user authentication.
-2. **Replay Immunity:** Because each mutation record contains a cryptographic parent hash and a monotonic sequence ID, replaying captured packets against an ODCS sync coordinator fails signature and vector clock verification.
-3. **Partition Tolerance:** In accordance with the CAP theorem, ODCS explicitly prioritizes **Availability** and **Partition Tolerance (AP)** over synchronous linearizability, ensuring systems never stop working for humans on the ground.
+The **Open Digital Continuity Standard (ODCS)** is architected and maintained by:
+
+**Anirudha Puthraya**  
+*Standards Director & Author · ODCS Standards Foundation*  
+*Organization:* [Veyra-Programming](https://github.com/Veyra-Programming)  
+*Dual-Engine Repository:* [github.com/Veyra-Programming/star-haven](https://github.com/Veyra-Programming/star-haven)  
+*Official Portal:* [https://odcs.in/](https://odcs.in/)

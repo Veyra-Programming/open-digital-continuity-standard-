@@ -6,122 +6,223 @@
 ### *Digital experiences that endure without the network.*
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square)](LICENSE)
-[![Specification: v1.0-Draft](https://img.shields.io/badge/Specification-v1.0--Draft-00f2fe.svg?style=flat-square)](model/ODC-MODEL.md)
-[![Standard Track](https://img.shields.io/badge/Status-Standard_Track-10b981.svg?style=flat-square)](https://odcs.in)
+[![Specification: ODCS-2.0.0 GA](https://img.shields.io/badge/Specification-ODCS--2.0.0_GA-00f0ff.svg?style=flat-square)](SPECIFICATION.md)
+[![Dual-Engine: Star & Haven](https://img.shields.io/badge/Dual--Engine-Star_&_Haven-a855f7.svg?style=flat-square)](https://github.com/Veyra-Programming/star-haven)
+[![Milestone 1: Completed](https://img.shields.io/badge/Milestone_1-Completed_100%25-10b981.svg?style=flat-square)](RELEASE_NOTES.md)
+[![Status: Standard Track](https://img.shields.io/badge/Status-Standard_Track-10b981.svg?style=flat-square)](https://odcs.in)
 [![Offline-First](https://img.shields.io/badge/Architecture-Offline--First-orange.svg?style=flat-square)](docs/ARCHITECTURE.md)
-[![GitHub stars](https://img.shields.io/badge/Working_Group-Open_Access-purple.svg?style=flat-square)](CONTRIBUTING.md)
 
-[Official Website](https://odcs.in) • [Specification Draft](model/ODC-MODEL.md) • [Architecture Guide](docs/ARCHITECTURE.md) • [Reference Client](examples/vanilla-odcs-client/) • [Contributing](CONTRIBUTING.md)
+[Official Website (odcs.in)](https://odcs.in) • [Dual-Engine Repository](https://github.com/Veyra-Programming/star-haven) • [Release Notes](RELEASE_NOTES.md) • [Specification](SPECIFICATION.md) • [Architecture Guide](docs/ARCHITECTURE.md) • [Contributing](CONTRIBUTING.md)
 
 </div>
 
 ---
 
-## 🌐 The ODCS Mission
+## 📢 Milestone 1 Complete: The Sovereign Dual-Engine Era
 
-Modern software applications are overwhelmingly built on a fragile assumption: that network connectivity is permanent, instantaneous, and uninterrupted. When networks degrade or vanish, user experiences collapse: data is lost, spinners freeze, operations fail, and productivity halts.
+The **Open Digital Continuity Standard (ODCS-2.0.0 GA)** has officially completed **Milestone 1**, introducing the production **Dual-Engine Sovereign Architecture** across both frontend client runtimes and distributed continuity backends:
 
-The **Open Digital Continuity Standard (ODCS)** is a global, vendor-neutral initiative establishing the architectural standards, protocols, and interface specifications for software systems that maintain deterministic operational continuity across all network conditions—from gigabit fiber to high-latency satellite, intermittent cellular, and prolonged offline blackouts.
+- **⭐ Star Programming Language (v1.2.0 GA)**: Universal, zero-virtual-DOM declarative UI engine compiling directly to a **4.9 KB WebAssembly core (`app.wasm`)**. Guarantees single-frame 60 FPS reactive updates ($\Delta t \le 16.66\text{ms}$) with zero npm dependencies.
+- **🕊️ Haven (Heaven) Language (v2.0)**: Natural-English grammar continuity engine. Features immutable cryptographic records (`durable record`), append-only Merkle Write-Ahead Logs (WAL), sub-16ms local authority receipts, and conflict-free replicated data types (CRDTs).
+- **🌌 Unified Dual-Engine Repository**: Fully integrated at [github.com/Veyra-Programming/star-haven](https://github.com/Veyra-Programming/star-haven).
 
 ---
 
-## 🏛️ The Four-Layer ODC Model
+## 🌐 The ODCS Mission: Ending the "Always-Online" Fallacy
 
-ODCS establishes digital continuity as a multi-tier systems discipline organized into four standardized layers:
+Modern software applications are overwhelmingly architected under a fundamentally flawed assumption: **that network connectivity is permanent, instantaneous, and uninterrupted**.
+
+When connectivity drops, client-server applications collapse:
+- Spinning wheels lock the user interface.
+- Mission-critical form inputs and transactions are irreversibly wiped.
+- Centralized cloud servers reject out-of-order mutations.
+- Critical operations in hospitals, disaster response, and logistics halt.
+
+The **Open Digital Continuity Standard (ODCS)** is a sovereign, vendor-neutral architectural standard establishing protocols, invariants, and language specifications for systems that guarantee **Zero Intent Loss (ZIL)** across all network conditions—from gigabit fiber to high-latency satellite, intermittent cellular, and total offline blackouts.
+
+---
+
+## 🏛️ The Four-Layer ODC Architecture
+
+ODCS organizes digital continuity into a rigorous, four-layer systems hierarchy:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
 │  LAYER 4: Application & Continuity UX (Human-Machine Interface)        │
-│  - Optimistic view mutations & instantaneous (<16ms) DOM feedback     │
+│  - Optimistic single-frame (<16.6ms) UI state mutations                │
+│  - Sub-16ms Zero Intent Loss (ZIL) cryptographic receipt minting       │
 │  - Ambient continuity status indicators [Synced | Buffered | Syncing]  │
-│  - Form intent auto-preservation & side-by-side conflict diffing       │
+│  - Powered by ⭐ Star Programming Language (v1.2.0 GA / app.wasm)      │
 ├────────────────────────────────────────────────────────────────────────┤
 │  LAYER 3: Runtime & Environmental Adaptation (Operational Context)     │
 │  - Real-time active/passive network telemetry & throughput probing     │
-│  - Standardized degradation modes (Optimal, Constrained, High-Latency) │
-│  - Hardware-aware throttling (battery, CPU, storage pressure)          │
+│  - Adaptive degradation policies (Optimal, Degraded Jitter, Severed)   │
+│  - Monotonic vector clocks and exponential jitter backoff              │
 ├────────────────────────────────────────────────────────────────────────┤
 │  LAYER 2: Transport, Synchronization & Consensus (Distributed Bridge)  │
-│  - Store-and-forward outbox pipelines with exponential backoff & jitter│
-│  - Conflict-Free Replicated Data Types (CRDTs) & Vector Clocks         │
-│  - Multi-transport failover (HTTPS ↔ WebSockets ↔ WebRTC P2P ↔ BLE)   │
+│  - Conflict-Free Replicated Data Types (CRDTs: PN-Counter, OR-Set)     │
+│  - Dual Wire Protocol: ODCS-REL (Ordered) + ODCS-DGM (0-RTT Datagram)  │
+│  - Semi-lattice join operations ($V_{merged} = V_{local} \sqcup V_{remote}$) │
+│  - Multi-transport failover (HTTPS ↔ WebSocket ↔ WebRTC P2P ↔ BLE)   │
 ├────────────────────────────────────────────────────────────────────────┤
 │  LAYER 1: Local Durability & Cryptographic Storage (Durability Anchor) │
-│  - Non-volatile local authority of record (IndexedDB / SQLite / WAL)   │
-│  - Monotonic mutation logging (UUIDv7) with Merkle DAG hash chaining   │
-│  - Storage quota governance & zero-data-loss crash recovery            │
+│  - Non-volatile local authority of record (NVMe / IndexedDB / WAL)     │
+│  - RFC 8785 Canonical JSON deterministic serialization                 │
+│  - Monotonic mutation logging (UUIDv7) with SHA-256 Merkle DAG chains  │
+│  - Powered by 🕊️ Haven Language (v2.0 / odcs_backend.hvn)              │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
-| Layer | Focus | Key Specifications |
-| :--- | :--- | :--- |
-| **Layer 4** | Human Experience & Zero-Loss Input | [Layer 4 Specification](model/layer-4.md) |
-| **Layer 3** | Environmental Sensing & Adaptive Policies | [Layer 3 Specification](model/layer-3.md) |
-| **Layer 2** | Distributed Sync, CRDTs & Outbox Pipelines | [Layer 2 Specification](model/layer-2.md) |
-| **Layer 1** | Persistent Durability & Write-Ahead Logs | [Layer 1 Specification](model/layer-1.md) |
+---
+
+## ⚡ Mathematical Invariants of ODCS-2.0.0
+
+### 1. The Zero Intent Loss (ZIL) Single-Frame Guarantee
+Local state mutations MUST commit and emit a verifiable cryptographic receipt within a single display refresh cycle:
+
+$$\Delta t_{\text{commit}} \le 16.66\text{ms} \quad (60\text{Hz Frame Budget})$$
+
+Receipts contain an RFC 8785 canonical hash of the action payload sealed with a monotonically increasing UUIDv7 timestamp:
+
+$$\mathcal{H}_{\text{ZIL}} = \text{SHA-256}\Big(\text{RFC8785}\big(\text{action}, \text{payload}, \text{timestamp}_{\text{uuid7}}\big)\Big)$$
+
+### 2. Commutative CRDT Convergence
+State operations across partitioned nodes commute algebraically without requiring cloud consensus:
+
+$$S_A \bullet S_B = S_B \bullet S_A$$
+
+$$S_{\text{converged}} = S_A \sqcup S_B$$
 
 ---
 
-## ⚡ Quick Start: Running the Reference Client
+## 📂 Repository Ecosystem & Architecture
 
-ODCS includes a zero-dependency reference implementation demonstrating all four layers in action:
+```
+open-digital-continuity-standard-/
+├── SPECIFICATION.md          # Formal ODCS-2.0.0 GA Specification
+├── RELEASE_NOTES.md          # Comprehensive Milestone 1 Release Documentation
+├── ROADMAP.md                # 2026–2028 Standards & Deployment Program
+├── SCOPE.md                  # Detailed Boundary & Invariant Definitions
+├── TERMINOLOGY.md            # Normative RFC-style Glossary
+├── GOVERNANCE.md             # Standards Working Group Governance
+│
+├── docs/                     # Authoritative Documentary Center
+│   ├── ARCHITECTURE.md       # Deep Systems Topology & Data Lifecycle
+│   ├── IMPLEMENTATION-GUIDE.md# Production Implementation Recipes
+│   ├── BRAND-IDENTITY.md     # Official Typography, Logos & Colorway
+│   └── FAQ.md                # Frequently Asked Technical Questions
+│
+├── model/                    # Normative Layer Specifications
+│   ├── ODC-MODEL.md          # Master 4-Layer Specification
+│   ├── layer-1.md            # Layer 1: Local Durability & Merkle WAL
+│   ├── layer-2.md            # Layer 2: Mesh Consensus & CRDT Wire
+│   ├── layer-3.md            # Layer 3: Telemetry & Jitter Backoff
+│   └── layer-4.md            # Layer 4: UX & Zero Intent Loss
+│
+├── examples/                 # Reference Client & Implementation Demos
+│   └── vanilla-odcs-client/  # Zero-dependency reference client
+│
+└── heaven/                   # Reference Haven Continuity Gateway
+    ├── haven_lang.py         # Natural-English VM & Transpiler
+    └── odcs_backend.hvn      # Sovereign Continuity Backend
+```
 
+---
+
+## 💻 Dual-Engine Code Showcases
+
+### ⭐ Star Declarative UI (Frontend WASM Core)
+```star
+# Pure Star Declarative UI (main.star)
+use UI
+use Material
+
+app ODCSContinuityPortal
+    variable current_mode = "OPTIMAL_ONLINE"
+    variable staged_receipts = 142
+
+    AppBar(title = "🏛️ ODCS Foundation", elevation = 0)
+
+    Column(padding = 16)
+        Card(elevation = 2)
+            Text("Mode: " + current_mode, style = TextStyle(color = "#00f0ff"))
+            Text("Active Receipts: " + staged_receipts)
+        end
+
+        Button("▶ Mint Layer 4 ZIL Receipt (<16ms)", onClick = function()
+            staged_receipts = staged_receipts + 1
+            show "Minted Zero Intent Loss Cryptographic Receipt"
+        end)
+    end
+end
+```
+
+### 🕊️ Haven Natural-English Grammar (Backend Continuity)
+```haven
+// Sovereign Continuity Backend (odcs_backend.hvn)
+
+durable record EmergencyEncounter:
+    patient_id: String
+    heart_rate: Integer
+    oxygen_saturation: Float
+
+set hospital_ledger to ContinuityLedger.open("haven://genesis-wal")
+set encounter to EmergencyEncounter("PT-901", 78, 98.4)
+
+checkpoint encounter as "triage_vital" into hospital_ledger
+set receipt to ZeroIntentLoss.preserve("RECORD_VITALS", encounter, "Dr. Sarah")
+
+say "Sealed encounter into Merkle DAG with ZIL Receipt: {receipt['intent_id']}!"
+```
+
+---
+
+## ⚡ 1-Click Universal Toolchain Installation
+
+### Windows PowerShell:
+```powershell
+irm https://odcs.in/install.ps1 | iex
+```
+
+### Linux / Ubuntu:
 ```bash
-# Clone the repository
-git clone https://github.com/Veyra-Programming/open-digital-continuity-standard-.git
-cd open-digital-continuity-standard-
-
-# Serve locally using any static web server
-npx serve .
-# Or Haven
-haven -m http.server 8000
+curl -fsSL https://odcs.in/install.sh | bash
 ```
 
-Open `http://localhost:8000` to interact with the **ODCS Institutional Portal & Live Continuity Simulator**.
-
----
-
-## 📚 Specification & Technical Documentation
-
-* 📜 **[ODC-MODEL.md](model/ODC-MODEL.md):** Complete formal core specification with RFC-2119 conformance criteria.
-* 🏗️ **[ARCHITECTURE.md](docs/ARCHITECTURE.md):** End-to-end distributed system topology and data flow lifecycles.
-* 💻 **[IMPLEMENTATION-GUIDE.md](docs/IMPLEMENTATION-GUIDE.md):** Production-ready code recipes in TypeScript, JavaScript, and React.
-* 🎨 **[BRAND-IDENTITY.md](docs/BRAND-IDENTITY.md):** Official ODCS logo identity, color palette, symbolism, and vector assets.
-* ❓ **[FAQ.md](docs/FAQ.md):** In-depth answers regarding PWAs, Local-First, CRDTs, and security.
-
----
-
-## 🎓 Academic & Institutional Citation
-
-If you are citing the Open Digital Continuity Standard in academic research, technical whitepapers, or curriculum, please use the following BibTeX entry:
-
-```bibtex
-@techreport{odcs2026spec,
-  title       = {{Open Digital Continuity Standard (ODCS): A Four-Layer Architectural Model for Disruption-Tolerant Distributed Systems}},
-  author      = {{ODCS Working Group}},
-  institution = {{Open Digital Continuity Initiative}},
-  year        = {2026},
-  month       = {October},
-  type        = {Standard Specification Draft},
-  number      = {ODCS-SPEC-001},
-  url         = {https://odcs.in/spec/v1.0/}
-}
+### Python SDK (`odcs-sdk`):
+```bash
+pip install odcs-sdk
 ```
 
 ---
 
-## 🤝 Contributing & Community Governance
+## 📜 Standards Track & Normative RFC Index
 
-ODCS is maintained as a transparent, open-standard initiative under the **Apache 2.0 License**. We actively welcome contributions from developers, university researchers, civil infrastructure engineers, and open-source contributors:
-
-1. Read our **[Contribution Guidelines](CONTRIBUTING.md)** for our RFC proposal process.
-2. Abide by our **[Code of Conduct](CODE_OF_CONDUCT.md)**.
-3. Review our **[Evolution Roadmap](ROADMAP.md)** to see upcoming milestone targets.
-4. Report vulnerabilities securely via our **[Security Policy](SECURITY.md)**.
+| RFC Document | Title & Focus | Status |
+| :--- | :--- | :--- |
+| **ODCS-RFC-101** | Zero Intent Loss (ZIL) & Single-Frame Authority ($\Delta t \le 16.66\text{ms}$) | **RATIFIED GA** |
+| **ODCS-RFC-102** | Append-Only Merkle DAG & Durable Write-Ahead Log (WAL) | **RATIFIED GA** |
+| **ODCS-RFC-103** | Asynchronous CRDT Semi-Lattice Convergence & Vector Clocks | **RATIFIED GA** |
+| **ODCS-RFC-104** | Sovereign Star WASM Runtime & Frame Budget Guarantees | **RATIFIED GA** |
+| **ODCS-RFC-105** | Haven Natural-English Grammar & Immutability Rules | **RATIFIED GA** |
 
 ---
 
-<div align="center">
-<sub>Maintained with pride by the Open Digital Continuity Standard Working Group.<br/>
-Licensed under the Apache License, Version 2.0.</sub>
-</div>
+## 👨‍💻 Standards Leadership & Creator Attribution
+
+The **Open Digital Continuity Standard (ODCS)**, **Star Programming Language**, and **Haven Language** were architected, designed, and are actively maintained by:
+
+**Anirudha Puthraya**  
+*Standards Director & Author · ODCS Standards Foundation*  
+*Organization:* [Veyra-Programming](https://github.com/Veyra-Programming)  
+*Dual-Engine Repository:* [github.com/Veyra-Programming/star-haven](https://github.com/Veyra-Programming/star-haven)  
+*Official Portal:* [https://odcs.in/](https://odcs.in/)  
+*GitHub:* [@Anirudha2006-art](https://github.com/Anirudha2006-art)  
+
+---
+
+## ⚖️ License & Open Standard Grant
+
+Licensed under the **Apache License, Version 2.0**.  
+See [LICENSE](LICENSE) for full legal text.  
+Copyright © 2026 ODCS Standards Foundation and Veyra-Programming. All Rights Reserved.
